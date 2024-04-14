@@ -1,0 +1,18 @@
+---
+- name: Ensure standard dirs exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - ~/.config/skhd
+    - ~/.config/yabai
+  tags: symlink
+
+- name: Symlink files
+  file: path={{ item.path }} src=~/vc/dotfiles/{{ item.src }} state=link
+  tags: symlink
+  with_items:
+    - src: skhdrc
+      path: ~/.config/skhd/skhdrc
+    - src: yabairc
+      path: ~/.config/yabai/yabairc
