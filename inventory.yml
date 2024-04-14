@@ -1,0 +1,13 @@
+---
+workstation:
+  hosts:
+    localhost:
+      ansible_connection: local
+  vars:
+    ssh_config_path: ~/.ssh/id_rsa
+
+odroid:
+  hosts:
+    odroid
+  vars:
+    ssh_config_path: ~/.ssh/id_ed25519
