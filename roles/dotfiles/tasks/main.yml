@@ -1,0 +1,43 @@
+---
+- name: Ensure standard dirs exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - ~/vc
+    - ~/.config/kak
+    - ~/.local/bin
+  tags: symlink
+
+- name: Ensure ssh dir exists
+  ansible.builtin.file:
+    path: ~/.ssh
+    state: directory
+    mode: "0700"
+  tags: symlink
+
+# This doesn't make any sense, ansible is becoming my dotfiles setup system.
+# So I'm going to start moving the dotfiles into this repo
+# - name: Get/update dotfiles
+#   ansible.builtin.git:
+#     repo: git@github.com:schickm/dotfiles.git
+#     dest: ~/vc/dotfiles
+#     force: false
+
+- name: Symlink files
+  file: path={{ item.path }} src=~/vc/dotfiles/{{ item.src }} state=link
+  tags: symlink
+  with_items:
+    - src: fish/functions
+      path: ~/.config/fish/functions
+    - src: editorconfig
+      path: ~/.editorconfig
+    - src: kakrc
+      path: ~/.config/kak/kakrc
+    - src: tigrc
+      path: ~/.tigrc
+
+- name: Install ssh config
+  template:
+    src: ssh_config.j2
+    dest: ~/.ssh/config
