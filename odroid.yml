@@ -1,0 +1,5 @@
+---
+- hosts: odroid
+  roles:
+    - dotfiles
+    - kakoune
