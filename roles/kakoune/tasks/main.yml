@@ -1,0 +1,25 @@
+---
+- name: clone kakoune plugin repos
+  ansible.builtin.git:
+    repo: '{{ item.src }}'
+    dest: '~/.config/kak/autoload/plugins/{{ item.dest }}'
+    force: true
+  loop:
+    - src: 'https://github.com/alexherbo2/auto-pairs.kak.git'
+      dest: auto-pairs.kak
+    - src: 'https://gitlab.com/Screwtapello/kakoune-shellcheck.git'
+      dest: kakoune-shellcheck
+    - src: 'https://github.com/occivink/kakoune-find'
+      dest: kakoune-find
+    - src: 'https://bitbucket.org/KJ_Duncan/kakoune-plantuml.kak'
+      dest: kakoune-plantuml
+- name: symlink kakoune rc files
+  ansible.builtin.file:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    state: link
+  loop:
+    - src: ~/vc/kakoune/rc
+      dest: ~/.config/kak/autoload/kak_official
+    - src: ~/vc/dotfiles/kak/autoload
+      dest: ~/.config/kak/autoload/personal
