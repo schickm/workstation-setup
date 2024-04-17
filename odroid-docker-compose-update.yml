@@ -1,0 +1,18 @@
+---
+- name: Update Docker Compose image
+  hosts: odroid
+  tasks:
+    - name: Pull new image
+      community.docker.docker_compose_v2:
+        project_src: "~/docker-services"
+        pull: missing
+        remove_orphans: true
+        services:
+          - "{{ service }}"
+      register: output
+    - name: Show results
+      ansible.builtin.debug:
+        var: output
+    - name: Prune
+      community.docker.docker_prune:
+        images: true
