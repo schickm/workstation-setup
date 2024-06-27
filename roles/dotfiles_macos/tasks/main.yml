@@ -9,7 +9,7 @@
   tags: symlink
 
 - name: Symlink files
-  file: path={{ item.path }} src=~/vc/dotfiles/{{ item.src }} state=link
+  file: path={{ item.path }} src=~/vc/workstation-setup/roles/dotfiles/files/{{ item.src }} state=link
   tags: symlink
   with_items:
     - src: skhdrc
