@@ -1,0 +1,17 @@
+---
+- name: Clone widgets repo
+  ansible.builtin.git:
+    repo: git@github.com:schickm/ubersicht-widgets.git
+    dest: ~/vc/ubersicht-widgets
+
+- name: Symlink widgets
+  ansible.builtin.file:
+    src: "~/vc/ubersicht-widgets/widgets/SkhdKeys.jsx"
+    dest: "~/Library/Application Support/Übersicht/widgets/SkhdKeys.jsx"
+    state: link
+
+- name: Symlink fish script
+  ansible.builtin.file:
+    src: "~/vc/ubersicht-widgets/update_mode.sh"
+    dest: "~/bin/update_mode.sh"
+    state: link

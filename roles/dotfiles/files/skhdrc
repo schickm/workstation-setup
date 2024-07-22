@@ -1,9 +1,9 @@
-:: default  : update_mode.fish default
-:: focus  @ : update_mode.fish focus
-:: swap   @ : update_mode.fish swap
-:: warp   @ : update_mode.fish warp
-:: resize @ : update_mode.fish resize
-:: toggle @ : update_mode.fish toggle
+:: default  : update_mode.sh default
+:: focus  @ : update_mode.sh focus
+:: swap   @ : update_mode.sh swap
+:: warp   @ : update_mode.sh warp
+:: resize @ : update_mode.sh resize
+:: toggle @ : update_mode.sh toggle
 
 # CTRL-SPACE is the global hotkey to toggle in/out of modal mode. Entry is
 # always to FOCUS mode. Getting out of any mode can also be done with ESCAPE.
