@@ -17,6 +17,12 @@
     - src: yabairc
       path: ~/.config/yabai/yabairc
 
+- name: Add Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  with_items:
+    - koekeishiya/formulae
+
 - name: Install Homebrew stuff
   community.general.homebrew:
     name: "{{ item }}"
@@ -25,9 +31,3 @@
     - asdf
     - skhd
     - yabai
-
-- name: Add Homebrew taps
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-  with_items:
-    - koekeishiya/formulae
