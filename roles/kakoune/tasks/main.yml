@@ -1,4 +1,16 @@
 ---
+- name: clone kakoune repo
+  ansible.builtin.git:
+      repo: 'https://github.com/mawww/kakoune.git'
+      dest: '~/vc/kakoune'
+      update: no
+
+- name: build kakoune
+  ansible.builtin.command: make
+  args:
+      chdir: '~/vc/kakoune'
+      creates: '~/vc/kakoune/src/kak'
+
 - name: clone kakoune plugin repos
   ansible.builtin.git:
     repo: '{{ item.src }}'
@@ -13,12 +25,20 @@
       dest: kakoune-find
     - src: 'https://bitbucket.org/KJ_Duncan/kakoune-plantuml.kak'
       dest: kakoune-plantuml
-- name: symlink kakoune rc files
+
+- name: ensure ~/bin
+  ansible.builtin.file:
+    path: ~/bin
+    state: directory
+
+- name: symlink kakoune files
   ansible.builtin.file:
     src: '{{ item.src }}'
     dest: '{{ item.dest }}'
     state: link
   loop:
+    - src: ~/vc/kakoune/src/kak
+      dest: ~/bin/kak
     - src: ~/vc/kakoune/rc
       dest: ~/.config/kak/autoload/kak_official
     - src: ~/vc/workstation-setup/roles/dotfiles/files/kak/autoload
