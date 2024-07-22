@@ -36,6 +36,8 @@
       path: ~/.config/kak/kakrc
     - src: tigrc
       path: ~/.tigrc
+    - src: gitconfig
+      path: ~/.gitconfig
 
 - name: Install ssh config
   template:
