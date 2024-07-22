@@ -16,3 +16,18 @@
       path: ~/.config/skhd/skhdrc
     - src: yabairc
       path: ~/.config/yabai/yabairc
+
+- name: Install Homebrew stuff
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - asdf
+    - skhd
+    - yabai
+
+- name: Add Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  with_items:
+    - koekeishiya/formulae
