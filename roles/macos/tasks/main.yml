@@ -1,0 +1,31 @@
+---
+- name: Add Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  with_items:
+    - koekeishiya/formulae
+    - kakoune-lsp/kakoune-lsp
+
+- name: Install Homebrew stuff
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - asdf
+    - skhd
+    - yabai
+    - kakoune-lsp
+    - direnv
+    - shellcheck
+    - editorconfig
+    - watch
+    - yq
+    - jq
+    - java
+    - yamllint
+
+- name: Configure Direnv
+  ansible.builtin.lineinfile:
+    path: ~/.config/fish/config.fish
+    line: "direnv hook fish | source"
+    state: present
