@@ -6,7 +6,7 @@ evaluate-commands %sh{
 }
 
 eval %sh{kak-lsp --kakoune -s "$kak_session"}
-set global lsp_cmd "kak-lsp -s %val{session} --log /tmp/kak-lsp.log --config kak-lsp.toml"
+set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
 define-command -override -hidden lsp-show-error -params 1 -docstring "Render error" %{
     echo -debug "kak-lsp:" %arg{1}
@@ -16,6 +16,7 @@ hook global WinSetOption filetype=(typescript|terraform|python) %{
     map window user l ': enter-user-mode lsp<ret>' -docstring 'lsp commands'
     # enable to setup debug logging of kak-lsp
     lsp-enable-window
+    lsp-auto-hover-enable
 }
 
 hook global WinSetOption filetype=terraform %{
