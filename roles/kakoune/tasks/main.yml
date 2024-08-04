@@ -1,29 +1,29 @@
 ---
 - name: clone kakoune repo
   ansible.builtin.git:
-      repo: 'https://github.com/mawww/kakoune.git'
-      dest: '~/vc/kakoune'
-      update: no
+    repo: "https://github.com/mawww/kakoune.git"
+    dest: "~/vc/kakoune"
+    update: no
 
 - name: build kakoune
   ansible.builtin.command: make
   args:
-      chdir: '~/vc/kakoune'
-      creates: '~/vc/kakoune/src/kak'
+    chdir: "~/vc/kakoune"
+    creates: "~/vc/kakoune/src/kak"
 
 - name: clone kakoune plugin repos
   ansible.builtin.git:
-    repo: '{{ item.src }}'
-    dest: '~/.config/kak/autoload/plugins/{{ item.dest }}'
+    repo: "{{ item.src }}"
+    dest: "~/.config/kak/autoload/plugins/{{ item.dest }}"
     force: true
   loop:
-    - src: 'https://github.com/alexherbo2/auto-pairs.kak.git'
+    - src: "https://github.com/alexherbo2/auto-pairs.kak.git"
       dest: auto-pairs.kak
-    - src: 'https://gitlab.com/Screwtapello/kakoune-shellcheck.git'
+    - src: "https://gitlab.com/Screwtapello/kakoune-shellcheck.git"
       dest: kakoune-shellcheck
-    - src: 'https://github.com/occivink/kakoune-find'
+    - src: "https://github.com/occivink/kakoune-find"
       dest: kakoune-find
-    - src: 'https://bitbucket.org/KJ_Duncan/kakoune-plantuml.kak'
+    - src: "https://bitbucket.org/KJ_Duncan/kakoune-plantuml.kak"
       dest: kakoune-plantuml
 
 - name: ensure ~/bin
@@ -33,8 +33,8 @@
 
 - name: symlink kakoune files
   ansible.builtin.file:
-    src: '{{ item.src }}'
-    dest: '{{ item.dest }}'
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     state: link
   loop:
     - src: ~/vc/kakoune/src/kak
