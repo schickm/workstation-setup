@@ -6,6 +6,7 @@
   with_items:
     - ~/vc
     - ~/.config/kak
+    - ~/.config/kak-lsp
     - ~/.local/bin
   tags: symlink
 
@@ -38,6 +39,8 @@
       path: ~/.tigrc
     - src: gitconfig
       path: ~/.gitconfig
+    - src: kak-lsp.toml
+      path: ~/.config/kak-lsp/kak-lsp.toml
 
 - name: Install ssh config
   template:

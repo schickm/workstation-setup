@@ -12,7 +12,7 @@ define-command -override -hidden lsp-show-error -params 1 -docstring "Render err
     echo -debug "kak-lsp:" %arg{1}
 }
 
-hook global WinSetOption filetype=(typescript|terraform) %{
+hook global WinSetOption filetype=(typescript|terraform|python) %{
     map window user l ': enter-user-mode lsp<ret>' -docstring 'lsp commands'
     # enable to setup debug logging of kak-lsp
     lsp-enable-window
