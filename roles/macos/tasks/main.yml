@@ -23,6 +23,7 @@
     - jq
     - java
     - yamllint
+    - fx
 
 - name: Configure Direnv
   ansible.builtin.lineinfile:
