@@ -19,6 +19,6 @@ hook global WinSetOption filetype=(typescript|terraform|python) %{
     lsp-auto-hover-enable
 }
 
-hook global WinSetOption filetype=terraform %{
+hook global WinSetOption filetype=(terraform|typescript|python) %{
     hook window BufWritePre .* lsp-formatting-sync
 }
