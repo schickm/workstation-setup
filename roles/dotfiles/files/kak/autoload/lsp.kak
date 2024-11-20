@@ -6,7 +6,8 @@ evaluate-commands %sh{
 }
 
 eval %sh{kak-lsp --kakoune -s "$kak_session"}
-set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+# set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+set global lsp_cmd "kak-lsp -s %val{session}"
 
 define-command -override -hidden lsp-show-error -params 1 -docstring "Render error" %{
     echo -debug "kak-lsp:" %arg{1}

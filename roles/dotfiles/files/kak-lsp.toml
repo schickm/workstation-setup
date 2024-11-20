@@ -446,9 +446,12 @@ roots = ["package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
 command = "typescript-language-server"
 args = ["--stdio"]
 settings_section = "_"
+
 [language_server.typescript-language-server.settings._]
-# quotePreference = "double"
-# typescript.format.semicolons = "insert"
+typescript.format.indentSize = 2
+javascript.format.semicolons = 'remove'
+javascript.format.indentSize = 2
+
 
 # [language_server.biome]
 # filetypes = ["typescript", "javascript"]
