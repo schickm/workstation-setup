@@ -1,6 +1,10 @@
 [user]
 	email = matt@schickm.com
 	name = Matt Schick
+; Details on how this works:
+; https://gist.github.com/Icaruk/f024a18093dc28ec1588cfb90efc32f7
+[includeIf "gitdir:~/workvc/"]
+        path = ~/workvc/.gitconfig-work
 [push]
 	default = current
 	followTags = true
