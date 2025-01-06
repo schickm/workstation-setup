@@ -2,8 +2,9 @@
 
 - hosts: workstation
   roles:
+    - macos
     - dotfiles
     - dotfiles_macos
     - kakoune
     - ubersicht
-    - macos
+    

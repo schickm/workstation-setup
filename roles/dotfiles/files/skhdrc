@@ -1,9 +1,9 @@
-:: default  : update_mode.sh default
-:: focus  @ : update_mode.sh focus
-:: swap   @ : update_mode.sh swap
-:: warp   @ : update_mode.sh warp
-:: resize @ : update_mode.sh resize
-:: toggle @ : update_mode.sh toggle
+:: default  : ~/bin/update_mode.sh default
+:: focus  @ : ~/bin/update_mode.sh focus
+:: swap   @ : ~/bin/update_mode.sh swap
+:: warp   @ : ~/bin/update_mode.sh warp
+:: resize @ : ~/bin/update_mode.sh resize
+:: toggle @ : ~/bin/update_mode.sh toggle
 
 # CTRL-SPACE is the global hotkey to toggle in/out of modal mode. Entry is
 # always to FOCUS mode. Getting out of any mode can also be done with ESCAPE.
@@ -66,6 +66,7 @@ resize          < shift - h         : yabai -m window --resize left:200:0    # l
 
 # Toggle various props on current window
 toggle          < o                 : yabai -m window --toggle float   # float
+toggle          < z                 : yabai -m window --toggle zoom-fullscreen   # zoom fullscreen
 toggle          < u                 : yabai -m window --toggle native-fullscreen   # native fullscreen
 
 # All Modes

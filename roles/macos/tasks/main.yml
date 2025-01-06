@@ -6,7 +6,7 @@
     - koekeishiya/formulae
     - kakoune-lsp/kakoune-lsp
 
-- name: Install Homebrew stuff
+- name: Install Homebrew formulae
   community.general.homebrew:
     name: "{{ item }}"
     state: present
@@ -18,15 +18,35 @@
     - direnv
     - shellcheck
     - editorconfig
+    - fish
     - watch
     - yq
     - jq
     - java
     - yamllint
     - fx
+    - diff-so-fancy
+    - difftastic
+    - tig
+
+- name: Install Homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ubersicht
+    - iterm2
 
 - name: Configure Direnv
   ansible.builtin.lineinfile:
     path: ~/.config/fish/config.fish
     line: "direnv hook fish | source"
+    create: true
     state: present
+
+- name: Configure Fish Path
+  # fish_add_path exit's 1 if it already has a path, which causes ansible to fail, so 
+  # this just muffles the exit code...not ideal, but not sure how to easily make this
+  # more ansible friendly
+  ansible.builtin.command: sh -c 'fish -c "fish_add_path /opt/homebrew/bin" || exit 0'
+

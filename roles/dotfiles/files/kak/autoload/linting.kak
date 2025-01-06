@@ -6,10 +6,12 @@
 #
 # Examples for future implementations
 #
-# Javascript
-# BEWARE - I am explicitly ignoring the exit code from eslint
-# once I'm on eslint 5, I can just ignore exit code 1 and allow errors for 2
-# but on eslint <5 it sends error code 1 for config errrors and lint errors
+# Prereq:
+#   npm install -g eslint-formatter-kakoune
+#
+# Kakoune puts the text in a temp file, but eslint needs the original file in order to understand how
+# to apply lint rules.  So this function uses eslint's stdin method instead so it can specify the
+# filename 
 # 	run() { cat "$1" | npx --quiet eslint --format=$(npm root -g)/eslint-formatter-kakoune --stdin-filename ${kak_buffile} --stdin; } && run
 
 # working on getting the logic below to live in it's own hook.

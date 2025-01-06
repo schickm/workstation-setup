@@ -7,6 +7,7 @@
     - ~/vc
     - ~/.config/kak
     - ~/.config/kak-lsp
+    - ~/.config/fish
     - ~/.local/bin
   tags: symlink
 
