@@ -1,8 +1,3 @@
-# edit with alt-p
-map global normal <a-p> ':git-edit '
-map global insert <a-p> '<esc>:git-edit '
-
-
 # map jj to esc
 hook global InsertChar j %{ try %{
   exec -draft hH <a-k>jj<ret> d
@@ -67,6 +62,7 @@ map global user g ': enter-user-mode -lock grep<ret>'
 map global user G ': enter-grep-mode<ret>' -docstring 'grep current selection or prompt'
 map global user k ': enter-user-mode kakoune<ret>' -docstring 'kakoune specific helpers'
 map global user L ': enter-user-mode lint<ret>' -docstring 'lint commands'
+map global user p ': git-edit ' -docstring 'git edit'
 map global user s ': surround<ret>' -docstring 'Enter surround mode'
 map global user S ': suspend-and-resume "aspell check %val{buffile}"<ret>' -docstring 'spellcheck with aspell'
 map global user t ': enter-user-mode git<ret>' -docstring 'git commands'
