@@ -1,7 +1,7 @@
 
 declare-option -docstring 'Url where Git repo can be viewed online' \
 	str gitremoteurl
-
+# https://github.com/GrubhubProd/tonkotsu/blob/WDA-36553-ordertrackingsidebar-layout-components/src/app/shared/models/new-tracker-status-model.ts#L13-L16
 hook global BufOpenFile .* %{
 	evaluate-commands %sh{
 	    status=$(git status --branch --porcelain=v2)
@@ -12,13 +12,13 @@ hook global BufOpenFile .* %{
 	    remote_branch=$(echo "$upstream" | cut -d '/' -f 2-)
 	    remote=$(git remote get-url "$remote_name")
 
-		printf 'echo -debug upstream %s\n' "$upstream"
-		printf 'echo -debug remote_name %s\n' "$remote_name"
-		printf 'echo -debug remote_branch %s\n' "$remote_branch"
-		printf 'echo -debug remote %s\n' "$remote"
 
 	    case "$remote" in
 	      git@gitlab.com*)
+			printf 'echo -debug upstream %s\n' "$upstream"
+			printf 'echo -debug remote_name %s\n' "$remote_name"
+			printf 'echo -debug remote_branch %s\n' "$remote_branch"
+			printf 'echo -debug remote %s\n' "$remote"
 	        repo_url=$(echo "$remote" | sed 's|^git@gitlab.com:|https://gitlab.com/|; s|\.git$||')
 	        printf 'echo -debug repo_url %s\n' "$repo_url"
 			printf 'setup-gitlab-mode %s %s' "$repo_url" "$remote_branch"
