@@ -1,11 +1,11 @@
 # Build up elaborate process of getting the actual url and remote branch name
-declare-option str git_upstream_cmd \
+declare-option -hidden str git_upstream_cmd \
 	"git status --branch --porcelain=v2 | grep -m 1 '^# branch.upstream ' | cut -d ' ' -f 3"
-declare-option str git_remote_name_cmd \
+declare-option -hidden str git_remote_name_cmd \
 	"%opt{git_upstream_cmd} | cut -d '/' -f 1"
-declare-option str git_remote_branch_cmd \
+declare-option -hidden str git_remote_branch_cmd \
 	"%opt{git_upstream_cmd} | cut -d '/' -f 2"
-declare-option str git_remote_url_cmd \
+declare-option -hidden str git_remote_url_cmd \
 	"NAME=$(%opt{git_remote_name_cmd}) && git remote get-url $NAME | sed 's|^git@github.com:|https://github.com/|; s|\.git$||'"
 
 hook global BufOpenFile .* %{
@@ -29,7 +29,6 @@ hook global BufOpenFile .* %{
 	    esac
 	}
 }
-# https://github.com/GrubhubProd/tonkotsu/blob/WDA-36553-ordertrackingsidebar-layout-components/src/app/shared/models/new-tracker-status-model.ts#L13-L16
 
 
 define-command github-blame-url-for-selection \
@@ -74,6 +73,5 @@ define-command setup-github-mode \
     	-docstring 'Copy file+line url to clipboard'
     map buffer github U ": github-blame-url-for-selection open<ret>" \
     	-docstring 'Open file in browser on Github'
-
-	}
+}
 
