@@ -56,7 +56,7 @@ map global kakoune m ': rename-client main <semicolon> set global jumpclient mai
 map global kakoune d ': buffer *debug*<ret>' -docstring 'show debug buffer'
 
 
-map global user b ': suspend-and-resume "kak_client=%val{client} kak_session=%val{session} broot"<ret>' -docstring 'select files in broot'
+map global user b ': buffer ' -docstring 'open buffer...'
 map global user f ': enter-user-mode -lock file<ret>' -docstring 'file commands'
 map global user g ': enter-user-mode -lock grep<ret>'
 map global user G ': enter-grep-mode<ret>' -docstring 'grep current selection or prompt'
