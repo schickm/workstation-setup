@@ -9,7 +9,7 @@
 # duplicate code
 evaluate-commands %sh{
     if [ -z "$kak_javascript_formatcmd" ]; then
-        printf "echo -debug 'formatting.kak - environment var \"kak_javascript_formatcmd\" not defined, javascript automatic formatting will be disabled'"
+        printf "echo -debug 'formatting.kak - javascript automatic formatting will be disabled, environment var \"kak_javascript_formatcmd\" not defined'"
     else
 	    printf "
 	        hook global WinSetOption filetype=(javascript|typescript) %%{
@@ -23,7 +23,7 @@ evaluate-commands %sh{
 
 evaluate-commands %sh{
     if [ -z "$kak_html_formatcmd" ]; then
-        printf "echo -debug 'formatting.kak - environment var \"kak_html_formatcmd\" not defined, html automatic formatting will be disabled'"
+        printf "echo -debug 'formatting.kak - html automatic formatting will be disabled, environment var \"kak_html_formatcmd\" not defined'"
     else
 	    printf "
 	        hook global WinSetOption filetype=html %%{
