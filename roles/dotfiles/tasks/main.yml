@@ -5,6 +5,7 @@
     state: directory
   with_items:
     - ~/vc
+    - ~/bin
     - ~/.config/kak
     - ~/.config/kak-lsp
     - ~/.config/fish
@@ -42,6 +43,8 @@
       path: ~/.gitconfig
     - src: kak-lsp.toml
       path: ~/.config/kak-lsp/kak-lsp.toml
+    - src: extract-jira-ticket.sh
+      path: ~/bin/extract-jira-ticket.sh
 
 - name: Install ssh config
   template:
