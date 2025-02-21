@@ -45,6 +45,10 @@
       path: ~/.config/kak-lsp/kak-lsp.toml
     - src: extract-jira-ticket.sh
       path: ~/bin/extract-jira-ticket.sh
+    - src: nnn-for-kak.sh
+      path: ~/bin/nnn-for-kak.sh
+    - src: nnn-kak-opener.sh
+      path: ~/bin/nnn-kak-opener.sh
 
 - name: Install ssh config
   template:

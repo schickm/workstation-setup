@@ -217,7 +217,7 @@ version control.' \
 
 define-command async-command \
 	-override \
-	-docstring 'async-command <command to run>: runs command asyncronously and puts output in debug buffer' \
+	-docstring 'async-command <command to run>: runs command asyncronously' \
 	-params 1 %{
 
 	nop %sh{ {

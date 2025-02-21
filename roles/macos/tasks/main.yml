@@ -28,6 +28,8 @@
     - diff-so-fancy
     - difftastic
     - tig
+    - nnn
+    - viu
 
 - name: Install Homebrew casks
   community.general.homebrew_cask:
