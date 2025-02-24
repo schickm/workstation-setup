@@ -5,7 +5,8 @@ hook global InsertChar j %{ try %{
 }}
 
 declare-user-mode file
-map global file n ': terminal nnn-for-kak.sh %val{session} %val{client}<ret>' -docstring 'launch nnn in seperate window'
+map global file n ': terminal nnn-for-kak.sh %val{session} %val{client} %val{buffile}<ret>' -docstring 'launch nnn for current buffer''s directory'
+map global file N ': terminal nnn-for-kak.sh %val{session} %val{client}<ret>' -docstring 'launch nnn in CWD'
 map global file o ': nop %sh{ open "$(dirname "$kak_buffile")" }<ret>' -docstring 'open current directory in Finder'
 map global file t ': iterm-terminal-window-with-shell "cd %sh{ dirname ""$kak_buffile"" }"<ret>' -docstring 'open current directory in Terminal'
 
