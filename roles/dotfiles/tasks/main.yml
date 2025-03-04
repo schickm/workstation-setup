@@ -49,6 +49,8 @@
       path: ~/bin/nnn-for-kak.sh
     - src: nnn-kak-opener.sh
       path: ~/bin/nnn-kak-opener.sh
+    - src: prepare-commit-msg-with-jira-ticket.sh
+      path: ~/bin/prepare-commit-msg-with-jira-ticket.sh
 
 - name: Install ssh config
   template:
