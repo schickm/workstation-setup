@@ -40,3 +40,7 @@ hook global WinSetOption filetype=yaml %{
 
     hook window BufWritePost .* lint
 }
+
+hook global WinSetOption filetype=sh %{
+	enable-lint-on-change sh-lint-hooks
+}
