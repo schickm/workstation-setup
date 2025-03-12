@@ -53,7 +53,7 @@ def suspend-and-resume \
 	platform=$(uname -s)
 	case $platform in
 		Darwin)
-			automate_cmd="sleep 0.01; osascript -e 'tell application \"System Events\" to keystroke \"$cli_cmd\" & return '"
+			automate_cmd="sleep 0.01; osascript -e 'tell application \"System Events\" to keystroke \"${cli_cmd}\n\"'"
 			kill_cmd="/bin/kill"
 			break
 			;;
