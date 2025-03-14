@@ -1,11 +1,19 @@
 #!/bin/sh
+COMMIT_MSG_FILE="$1"
 
-COMMIT_MSG_FILE=$1
+# Read the first line of the commit message file
+FIRST_LINE=$(head -n 1 "$COMMIT_MSG_FILE")
+
+if echo "$FIRST_LINE" | grep -q "^fixup! "; then
+    echo "Skipping ticket number prepending for fixup commit."
+    exit 0
+fi
+
 TICKET=$(extract-jira-ticket.sh)
-TICKET_FORMATTED="[$TICKET]"
 
-if test -n "$TICKET" && ! grep -q "$TICKET_FORMATTED" "$COMMIT_MSG_FILE" ; then
-    printf "%s %s" "$TICKET_FORMATTED" "$(cat $COMMIT_MSG_FILE)" > $COMMIT_MSG_FILE
+if test -n "$TICKET" && ! echo "$FIRST_LINE" | grep -q "\[$TICKET\]"; then
+    echo "Prepending ticket number."
+    printf "%s %s" "[$TICKET]" "$(cat $COMMIT_MSG_FILE)" > "$COMMIT_MSG_FILE"
 fi
 
 
