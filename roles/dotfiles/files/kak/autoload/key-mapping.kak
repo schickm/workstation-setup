@@ -5,10 +5,12 @@ hook global InsertChar j %{ try %{
 }}
 
 declare-user-mode file
+map global file b ': nop %sh{ echo "$kak_bufname" | pbcopy }<ret>' -docstring 'Copy current buffer name to clipboard'
 map global file n ': terminal nnn-for-kak.sh %val{session} %val{client} %val{buffile}<ret>' -docstring 'launch nnn for current buffer''s directory'
 map global file N ': terminal nnn-for-kak.sh %val{session} %val{client}<ret>' -docstring 'launch nnn in CWD'
 map global file o ': nop %sh{ open "$(dirname "$kak_buffile")" }<ret>' -docstring 'open current directory in Finder'
 map global file t ': iterm-terminal-window-with-shell "cd %sh{ dirname ""$kak_buffile"" }"<ret>' -docstring 'open current directory in Terminal'
+
 
 declare-user-mode git
 
@@ -59,7 +61,7 @@ map global kakoune d ': buffer *debug*<ret>' -docstring 'show debug buffer'
 
 
 map global user b ': buffer ' -docstring 'open buffer...'
-map global user f ': enter-user-mode -lock file<ret>' -docstring 'file commands'
+map global user f ': enter-user-mode file<ret>' -docstring 'file commands'
 map global user g ': enter-user-mode -lock grep<ret>'
 map global user G ': enter-grep-mode<ret>' -docstring 'grep current selection or prompt'
 map global user k ': enter-user-mode kakoune<ret>' -docstring 'kakoune specific helpers'
