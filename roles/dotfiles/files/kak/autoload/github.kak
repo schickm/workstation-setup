@@ -1,12 +1,6 @@
-# Build up elaborate process of getting the actual url and remote branch name
-declare-option -hidden str git_upstream_cmd \
-	"git status --branch --porcelain=v2 | grep -m 1 '^# branch.upstream ' | cut -d ' ' -f 3"
-declare-option -hidden str git_remote_name_cmd \
-	"%opt{git_upstream_cmd} | cut -d '/' -f 1"
-declare-option -hidden str git_remote_branch_cmd \
-	"%opt{git_upstream_cmd} | cut -d '/' -f 2"
-declare-option -hidden str git_remote_url_cmd \
-	"NAME=$(%opt{git_remote_name_cmd}) && git remote get-url $NAME | sed 's|^git@github.com:|https://github.com/|; s|\.git$||'"
+# 
+# My own Github related helpers
+#
 
 hook global BufOpenFile .* %{
 	evaluate-commands %sh{
@@ -38,9 +32,11 @@ define-command github-blame-url-for-selection \
 	%{
 	nop %sh{
 		repo_url=$(eval "$kak_opt_git_remote_url_cmd")
-		branch=$(eval "$kak_opt_git_remote_branch_cmd")
+		branch=$(git rev-parse --abbrev-ref HEAD)
+		remote_branch=$(eval "$kak_opt_git_remote_branch_cmd")
+		merge_base=$(git merge-base "$branch" "$remote_branch")
 		lines=$(echo "$kak_selection_desc" | sed -e 's/\([0-9]*\)\.[0-9]*/L\1/g' -e 's/,/-/')
-		url="$repo_url/blob/$branch/$kak_bufname#$lines"
+		url="$repo_url/blob/$merge_base/$kak_bufname#$lines"
 
 		case $1 in
 			open)
