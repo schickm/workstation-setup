@@ -5,6 +5,7 @@
   with_items:
     - koekeishiya/formulae
     - kakoune-lsp/kakoune-lsp
+    - FelixKratz/formulae
 
 - name: Install Homebrew formulae
   community.general.homebrew:
@@ -14,6 +15,7 @@
     - asdf
     - skhd
     - yabai
+    - borders
     - kakoune-lsp
     - direnv
     - shellcheck

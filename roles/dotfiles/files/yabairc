@@ -1,7 +1,11 @@
 yabai -m config window_placement first_child
 yabai -m config layout bsp
 yabai -m config window_border on
-yabai -m config window_gap 0
+yabai -m config window_gap 4
+yabai -m config right_padding 2
+yabai -m config left_padding 2
+yabai -m config top_padding 2
+yabai -m config bottom_padding 2
 yabai -m config mouse_follows_focus off
 
 yabai -m rule --add app="^System Settings|Stats|Tomato One|Appgate SDP|System Information|Calculator|licecap|Tunable|VLC$" manage=off
@@ -11,3 +15,5 @@ yabai -m rule --add app="zoom.us" title="Zoom" display=2
 yabai -m rule --add app="Slack" display=2
 yabai -m rule --add app="Google Chrome" title="DevTools - Matt" display=2
 yabai -m config external_bar main:24:0
+
+borders active_color=0xff00ff00 inactive_color=0xff494d64 width=4 &
