@@ -74,3 +74,4 @@ focus,swap,warp,resize,toggle < y : yabai -m space --mirror y-axis # flip y-axis
 focus,swap,warp,resize,toggle < i : yabai -m window --toggle split # split
 focus,swap,warp,resize,toggle < e : yabai -m space --balance       # equalize
 focus,swap,warp,resize,toggle < z : yabai -m window --toggle zoom-fullscreen   # zoom fullscreen
+focus,swap,warp,resize,toggle < c : yabai -m window --close # close
