@@ -1,9 +1,9 @@
-:: default  : ~/bin/update_mode.sh default
-:: focus  @ : ~/bin/update_mode.sh focus
-:: swap   @ : ~/bin/update_mode.sh swap
-:: warp   @ : ~/bin/update_mode.sh warp
-:: resize @ : ~/bin/update_mode.sh resize
-:: toggle @ : ~/bin/update_mode.sh toggle
+:: default  : ~/bin/update_mode.sh default 61afef
+:: focus  @ : ~/bin/update_mode.sh focus 32f032
+:: swap   @ : ~/bin/update_mode.sh swap c678dd
+:: warp   @ : ~/bin/update_mode.sh warp ffa500
+:: resize @ : ~/bin/update_mode.sh resize 98c379
+:: toggle @ : ~/bin/update_mode.sh toggle ff9c9c
 
 # CTRL-SPACE is the global hotkey to toggle in/out of modal mode. Entry is
 # always to FOCUS mode. Getting out of any mode can also be done with ESCAPE.
