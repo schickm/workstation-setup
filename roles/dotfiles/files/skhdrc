@@ -75,3 +75,5 @@ focus,swap,warp,resize,toggle < i : yabai -m window --toggle split # split
 focus,swap,warp,resize,toggle < e : yabai -m space --balance       # equalize
 focus,swap,warp,resize,toggle < z : yabai -m window --toggle zoom-fullscreen   # zoom fullscreen
 focus,swap,warp,resize,toggle < c : yabai -m window --close # close
+focus,swap,warp,resize,toggle < shift - m : yabai -m window --minimize # minimize
+focus,swap,warp,resize,toggle < q : osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" # quit
