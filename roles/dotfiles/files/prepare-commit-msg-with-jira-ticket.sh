@@ -1,4 +1,9 @@
 #!/bin/sh
+#
+# To use this, just add the following to any .git/hooks/prepare-commit-msg file (assuming it's in PATH):
+#
+#    prepare-commit-msg-with-jira-ticket.sh "$1"
+#
 COMMIT_MSG_FILE="$1"
 
 # Read the first line of the commit message file
