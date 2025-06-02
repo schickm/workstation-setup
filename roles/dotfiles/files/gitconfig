@@ -21,7 +21,7 @@
 	cam = commit -am
 	cm = commit -m
 	co = checkout
-	cp = commit --patch
+	cp = cherry-pick
 	c = commit
 	st = status --short
 	sw = switch
