@@ -22,6 +22,8 @@
 	cm = commit -m
 	co = checkout
 	cp = cherry-pick
+	pl = pull
+	ph = ph
 	c = commit
 	st = status --short
 	sw = switch
@@ -35,9 +37,9 @@
 [colors]
 	ui = true
 
-[diff]
-        tool = difftastic
-	external = difft
+# [diff]
+#         tool = difftastic
+# 	external = difft
 [difftool]
         prompt = false
 
@@ -49,7 +51,7 @@
 [difftool "meld"]
         trustExitCode = true
         cmd = open -W -a Meld --args \"$LOCAL\" \"$REMOTE\"
-	cmd = meld \"$LOCAL\" \"$REMOTE\"
+	# cmd = meld \"$LOCAL\" \"$REMOTE\"
 [difftool "json-diff"]
 	cmd = json-diff \"$LOCAL\" \"$REMOTE\"
 [merge]
