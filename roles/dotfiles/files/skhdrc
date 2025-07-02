@@ -28,9 +28,8 @@ focus < j      : yabai -m window --focus south # south
 focus < l      : yabai -m window --focus east || yabai -m display --focus east # east
 focus < h      : yabai -m window --focus west || yabai -m display --focus west # west
 focus < return : yabai -m window --focus largest # largest
-focus < p      : yabai -m window --focus prev # prev
-focus < r      : yabai -m window --focus recent # recent
-focus < n      : yabai -m window --focus next # next
+focus < p      : yabai -m window --focus stack.prev # prev
+focus < n      : yabai -m window --focus stack.next # next
 focus < b      : yabai -m space --layout bsp # bsp
 focus < m      : yabai -m space --layout stack # stack
 focus < tab    : yabai -m display --focus recent # other display
@@ -41,6 +40,7 @@ swap < j      : yabai -m window --swap south # south
 swap < l      : yabai -m window --swap east # east
 swap < h      : yabai -m window --swap west # west
 swap < return : yabai -m window --swap largest # largest
+swap < p      : yabai -m window --swap stack.prev # prev
 swap < b      : yabai -m space --layout bsp # bsp
 swap < m      : yabai -m space --layout stack # stack
 swap < tab    : yabai -m window --display recent ; yabai -m display --focus recent # other display
@@ -76,4 +76,5 @@ focus,swap,warp,resize,toggle < e : yabai -m space --balance       # equalize
 focus,swap,warp,resize,toggle < z : yabai -m window --toggle zoom-fullscreen   # zoom fullscreen
 focus,swap,warp,resize,toggle < c : yabai -m window --close # close
 focus,swap,warp,resize,toggle < shift - m : yabai -m window --minimize # minimize
+focus,swap,warp,resize,toggle < shift - r : yabai --restart-service # restart yabai
 focus,swap,warp,resize,toggle < q : osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" # quit
