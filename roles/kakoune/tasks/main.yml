@@ -25,6 +25,8 @@
       dest: kakoune-find
     - src: "https://bitbucket.org/KJ_Duncan/kakoune-plantuml.kak"
       dest: kakoune-plantuml
+    - src: "https://github.com/occivink/kakoune-sort-selections"
+      dest: kakoune-sort-selections
 
 - name: ensure ~/bin
   ansible.builtin.file:
