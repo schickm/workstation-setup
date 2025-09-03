@@ -35,13 +35,17 @@ define-command github-blame-url-for-selection \
 		branch=$(git rev-parse --abbrev-ref HEAD)
 		remote_branch=$(eval "$kak_opt_git_remote_branch_cmd")
 		merge_base=$(git merge-base "$branch" "$remote_branch")
+		# The kak instance may have been launched in a subdirectory of the git repo (this happens
+		# frequently with monorepos).  This ensures that we use the full relative path for the git
+		# repo itself 
+		repo_file_path=$(git ls-files --full-name "$kak_bufname")
 		lines=$(echo "$kak_selection_desc" | sed -e 's/\([0-9]*\)\.[0-9]*/L\1/g' -e 's/,/-/')
-		url="$repo_url/blob/$merge_base/$kak_bufname#$lines"
+		url="$repo_url/blob/$merge_base/$repo_file_path#$lines"
 
 		case $1 in
 			open)
 				open "$url"
-				;;
+		      	;;
 			copy)
 				echo "$url" | pbcopy
 				;;
