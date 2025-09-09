@@ -97,20 +97,6 @@ define-command npm-run \
 		}"
 	} }
 
-
-define-command open-url-in-safari \
-	-params 1 \
-	-override \
-	-docstring '
-open-url-in-safari <url>: opens up url in a new tab in the last focused safari window
-	' \
-%{
-	nop %sh{
-		osascript ~/vc/dotfiles/scripts/open-or-show-url.scpt "${1}"
-	}
-}
-
-
 define-command iterm-terminal-window-with-shell \
 	-params 1 \
 	-override \
@@ -277,4 +263,22 @@ define-command enable-lint-on-change \
 define-command laptop-screen-mode -override -docstring 'Sets ui options that work well on small laptop screen' \
 	%{
 	set global lsp_hover_max_lines 10
+}
+
+define-command git-add-fixup-for-current-buffer -override %{
+	write
+	prompt -shell-script-candidates %{
+		git log -n 100 --oneline
+	} "which commit? " %{
+		eval %sh{
+			commit_sha=$(echo "$kak_text" | cut -d ' ' -f 1)
+			commit_message=$(echo "$kak_text" | cut -d ' ' -f 2-)
+
+			git reset -- "$kak_buffile" >/dev/null
+			git add "$kak_buffile" >/dev/null
+			git commit --fixup "$commit_sha" >/dev/null
+
+			printf "echo -markup ""{StatusLineInfo}Fixup created for {StatusLineValue}%s""\n" "$commit_message"
+		}
+	}
 }

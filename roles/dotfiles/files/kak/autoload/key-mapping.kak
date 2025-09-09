@@ -21,6 +21,7 @@ map global git b ': suspend-and-resume "tig blame +%val{cursor_line} %val{buffil
 map global git B ': git-remote-blame<ret>' -docstring 'show blame in browser based on remote'
 map global git c ': suspend-and-resume "git reset && git add %val{buffile} && git commit && git push"<ret>' -docstring 'commit current file and push'
 map global git f ': suspend-and-resume "git commit %val{buffile}"<ret>' -docstring 'make commit with current file'
+map global git F ': git-add-fixup-for-current-buffer<ret>' -docstring 'make fixup commit for current buffer'
 map global git s ': suspend-and-resume "kak_session=%val{session} kak_client=%val{client} tig status"<ret>' -docstring 'show git status (with tig)'
 map global git m ': suspend-and-resume "kak_session=%val{session} kak_client=%val{client} tig"<ret>' -docstring 'show main view (with tig)'
 map global git + ': git-amend-current-buffer<ret>' -docstring 'append this files changes to most recent commit'
@@ -38,7 +39,6 @@ define-command -hidden -override git-amend-current-buffer %{
     }
     echo -markup "{Information}%val{bufname} amended to git commit:" %sh{ git log -n 1 --format=%s }
 }
-
 
 declare-user-mode lint
 map global lint n ': lint-next-message<ret>: lint-show<ret>' -docstring 'next lint message'
