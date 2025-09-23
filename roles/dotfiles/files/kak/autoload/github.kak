@@ -5,8 +5,11 @@
 hook global BufOpenFile .* %{
 	evaluate-commands %sh{
 	    # first figure out the origin branch's remote
-	    # TODO - update calls below to use commands declared in options in file above
-	    remote_name=$(eval "$kak_opt_git_remote_name_cmd")
+        if ! remote_name=$(eval "$kak_opt_git_remote_name_cmd") || [ -z "$remote_name" ]; then
+		  printf 'echo -debug "github.kak - failed to determine git remote.  Is your branch pushed?"\n'
+          exit 1
+        fi
+
 	    remote=$(git remote get-url "$remote_name")
 
 
