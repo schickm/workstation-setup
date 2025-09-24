@@ -7,12 +7,34 @@
 
 # TODO - this needs to be generalized currently javascript & html is just
 # duplicate code
+define-command setup-javascript-autoformatting \
+	-docstring 'setup-javascript-autoformatting: installed prettierd if necessary and autoformats on save' \
+	-override %{
+
+	evaluate-commands %sh{
+		kecho() {
+			printf "echo %s\n" "$*"
+		}
+
+		prettierd --version >/dev/null 2>/dev/null
+		return_code=$?
+
+		if [ "$return_code" -ne 0 ]; then
+		  kecho "installing prettierd";
+		  npm i -g @fsouza/prettierd >/dev/null 2>/dev/null
+		else
+		  kecho "installed"
+		fi
+
+	}
+}
+
 evaluate-commands %sh{
     if [ -z "$kak_javascript_formatcmd" ]; then
         printf "echo -debug 'formatting.kak - javascript automatic formatting will be disabled, environment var \"kak_javascript_formatcmd\" not defined'"
     else
 	    printf "
-	        hook global WinSetOption filetype=(javascript|typescript) %%{
+	        hook global WinSetOption filetype=(javascript|typescript|json) %%{
 	            set buffer formatcmd \"$kak_javascript_formatcmd\"
 	            hook -group javascript-format-hooks window BufWritePre .* format
 	            hook -once -always window WinSetOption filetype=.* %%{ remove-hooks window javascript-format-hooks }
