@@ -52,17 +52,25 @@ warp < h      : yabai -m window --warp west # west
 warp < return : yabai -m window --warp largest # largest
 
 # Increase size of window using standard vi directional keys.
-resize          < k                 : yabai -m window --resize top:0:-200   # top
-resize          < j                 : yabai -m window --resize bottom:0:200 # bottom
-resize          < l                 : yabai -m window --resize right:200:0  # right
-resize          < h                 : yabai -m window --resize left:-200:0  # left
+resize          < k                 : yabai -m window --resize top:0:-100   # grow top
+resize          < ralt - k                 : yabai -m window --resize top:0:-200   # grow top (more)
+resize          < j                 : yabai -m window --resize bottom:0:100 # grow bottom
+resize          < ralt - j                 : yabai -m window --resize bottom:0:200 # grow bottom (more)
+resize          < l                 : yabai -m window --resize right:100:0  # grow right
+resize          < ralt - l                 : yabai -m window --resize right:200:0  # grow right (more)
+resize          < h                 : yabai -m window --resize left:-100:0  # grow left
+resize          < ralt - h                 : yabai -m window --resize left:-200:0  # grow left (more)
 
 # Prefix the above with shift to decrease size of window using standard vi
 # directional keys.
-resize          < shift - k         : yabai -m window --resize top:0:200     # top
-resize          < shift - j         : yabai -m window --resize bottom:0:-200 # bottom
-resize          < shift - l         : yabai -m window --resize right:-200:0  # right
-resize          < shift - h         : yabai -m window --resize left:200:0    # left
+resize          < shift - k         : yabai -m window --resize top:0:100     # shrink top
+resize          < shift + ralt - k         : yabai -m window --resize top:0:200     # shrink top (more)
+resize          < shift - j         : yabai -m window --resize bottom:0:-100 # shrink bottom
+resize          < shift + ralt - j         : yabai -m window --resize bottom:0:-200 # shrink bottom (more)
+resize          < shift - l         : yabai -m window --resize right:-100:0  # shrink right
+resize          < shift + ralt - l         : yabai -m window --resize right:-200:0  # shrink right (more)
+resize          < shift - h         : yabai -m window --resize left:100:0    # shrink left
+resize          < shift + ralt - h         : yabai -m window --resize left:200:0    # shrink left (more)
 
 # Toggle various props on current window
 toggle          < o                 : yabai -m window --toggle float   # float
