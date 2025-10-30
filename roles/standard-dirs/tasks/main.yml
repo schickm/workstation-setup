@@ -1,0 +1,15 @@
+---
+- name: Ensure standard dirs exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - ~/vc
+    - ~/bin
+
+- name: Ensure ssh dir exists
+  ansible.builtin.file:
+    path: ~/.ssh
+    state: directory
+    mode: "0700"
+

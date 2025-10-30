@@ -6,6 +6,11 @@ workstation:
   vars:
     ssh_config_path: ~/.ssh/id_ed25519
 
+laptop:
+  hosts:
+    10.0.0.79:
+      ansible_connection: ssh
+
 odroid:
   hosts:
     odroid
