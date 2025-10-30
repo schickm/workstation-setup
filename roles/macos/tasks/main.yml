@@ -39,7 +39,8 @@
     state: present
   with_items:
     - ubersicht
-    - iterm2
+    # - iterm2
+  tags: brew
 
 - name: Configure Direnv
   ansible.builtin.lineinfile:
