@@ -39,5 +39,5 @@ function update_symlinks
     mkdir -p $__personal_rc
 
     ln -s "$HOME/vc/kakoune/rc" "$__kak_rc"
-    ln -s "$HOME/vc/dotfiles/kak/autoload" "$__personal_rc"
+    ln -s "$HOME/vc/dotfiles-deprecated/kak/autoload" "$__personal_rc"
 end

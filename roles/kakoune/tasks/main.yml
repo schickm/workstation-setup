@@ -43,5 +43,5 @@
       dest: ~/bin/kak
     - src: ~/vc/kakoune/rc
       dest: ~/.config/kak/autoload/kak_official
-    - src: ~/vc/workstation-setup/roles/dotfiles/files/kak/autoload
+    - src: ~/vc/workstation-setup/roles/dotfiles-deprecated/files/kak/autoload
       dest: ~/.config/kak/autoload/personal

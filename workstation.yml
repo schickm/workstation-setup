@@ -3,7 +3,7 @@
 - hosts: workstation
   roles:
     - macos
-    - dotfiles
+    - dotfiles-deprecated
     - dotfiles_macos
     - kakoune
     - ubersicht

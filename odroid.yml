@@ -2,5 +2,5 @@
 - hosts: odroid
   roles:
     - docker
-    - dotfiles
+    - dotfiles-deprecated
     - kakoune
