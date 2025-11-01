@@ -1,0 +1,16 @@
+---
+- name: Build directories list for {{ dotfiles_subdir }}
+  ansible.builtin.find:
+    paths: ["{{ dotfiles_repo_local_destination }}/{{ dotfiles_subdir }}"]
+    recurse: no
+    file_type: directory
+  register: files
+
+- name: Deploy dotfiles from {{ dotfiles_subdir }}
+  with_items: "{{ files.files }}"
+  ansible.builtin.command:
+    cmd: |
+      stow --verbose=2 --target={{ dotfiles_home }} {{ item.path | basename }}
+    chdir: "{{ dotfiles_repo_local_destination }}/{{ dotfiles_subdir }}"
+  register: result
+  changed_when: 'result.stderr is search("LINK: ")'

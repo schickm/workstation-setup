@@ -1,15 +1,25 @@
 ---
-- name: clone kakoune repo
-  ansible.builtin.git:
-    repo: "https://github.com/mawww/kakoune.git"
-    dest: "~/vc/kakoune"
-    update: no
+# left here for the day I decide I want to switch back to installing from source
+#
+# - name: clone kakoune repo
+#   ansible.builtin.git:
+#     repo: "https://github.com/mawww/kakoune.git"
+#     dest: "~/vc/kakoune"
+#     update: no
+#
+# - name: build kakoune
+#   ansible.builtin.command: make
+#   args:
+#     chdir: "~/vc/kakoune"
+#     creates: "~/vc/kakoune/src/kak"
 
-- name: build kakoune
-  ansible.builtin.command: make
-  args:
-    chdir: "~/vc/kakoune"
-    creates: "~/vc/kakoune/src/kak"
+- name: get path to kak executable
+  shell: which kak
+  register: kak_path_result
+
+- name: set path to kak autoload
+  set_fact:
+    kak_autoload: "{{ [kak_path_result.stdout, '..', '..', 'share', 'kak', 'autoload' ] | path_join | realpath }}"
 
 - name: clone kakoune plugin repos
   ansible.builtin.git:
@@ -28,20 +38,8 @@
     - src: "https://github.com/occivink/kakoune-sort-selections"
       dest: kakoune-sort-selections
 
-- name: ensure ~/bin
-  ansible.builtin.file:
-    path: ~/bin
-    state: directory
-
 - name: symlink kakoune files
   ansible.builtin.file:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
+    src: "{{ kak_autoload }}"
+    dest: ~/.config/kak/autoload/kak_official
     state: link
-  loop:
-    - src: ~/vc/kakoune/src/kak
-      dest: ~/bin/kak
-    - src: ~/vc/kakoune/rc
-      dest: ~/.config/kak/autoload/kak_official
-    - src: ~/vc/workstation-setup/roles/dotfiles-deprecated/files/kak/autoload
-      dest: ~/.config/kak/autoload/personal

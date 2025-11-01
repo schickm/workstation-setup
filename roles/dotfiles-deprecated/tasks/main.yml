@@ -19,24 +19,11 @@
     mode: "0700"
   tags: symlink
 
-# This doesn't make any sense, ansible is becoming my dotfiles setup system.
-# So I'm going to start moving the dotfiles into this repo
-# - name: Get/update dotfiles
-#   ansible.builtin.git:
-#     repo: git@github.com:schickm/dotfiles.git
-#     dest: ~/vc/dotfiles
-#     force: false
 
 - name: Symlink files
   file: path={{ item.path }} src=~/vc/workstation-setup/roles/dotfiles-deprecated/files/{{ item.src }} state=link
   tags: symlink
   with_items:
-    - src: fish/fish_plugins
-      path: ~/.config/fish/fish_plugins
-    - src: fish/functions
-      path: ~/.config/fish/functions
-    - src: editorconfig
-      path: ~/.editorconfig
     - src: kakrc
       path: ~/.config/kak/kakrc
     - src: tigrc

@@ -1,0 +1,4 @@
+---
+dotfiles_repo_version: main
+dotfiles_repo_local_destination: "{{ ansible_env.HOME }}/dotfiles"
+dotfiles_home: "{{ ansible_env.HOME }}"

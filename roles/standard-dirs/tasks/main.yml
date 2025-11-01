@@ -5,11 +5,14 @@
     state: directory
   with_items:
     - ~/vc
-    - ~/bin
+    # This is necessary so Stow doesn't turn autoload into a symlink
+    # We need to do some symlinking inside of autoload during the kakoune
+    # role, so we only want Stow to make changes inside of it.  See dotfiles
+    # role for stow usage
+    - ~/.config/kak/autoload
 
 - name: Ensure ssh dir exists
   ansible.builtin.file:
     path: ~/.ssh
     state: directory
     mode: "0700"
-

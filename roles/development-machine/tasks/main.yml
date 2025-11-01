@@ -1,0 +1,12 @@
+---
+- name: Install common packages
+  ansible.builtin.package:
+    name:
+      - git
+      - tig
+      - tree
+      - shellcheck
+      - kakoune
+      - kakoune-lsp
+    state: present
+  become: "{{ 'false' if ansible_pkg_mgr == 'homebrew' else 'true' }}"

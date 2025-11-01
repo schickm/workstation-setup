@@ -1,0 +1,26 @@
+---
+- name: Install stow and git
+  ansible.builtin.package:
+    name:
+      - stow
+      - git
+    state: present
+  become: "{{ 'false' if ansible_pkg_mgr == 'homebrew' else 'true' }}"
+
+- name: Ensure dotfiles repository is cloned locally
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_repo_local_destination }}"
+
+- name: Set dotfiles directories to deploy
+  ansible.builtin.set_fact:
+    dotfiles_dirs:
+      - dotfiles_shared
+      - "{{ 'dotfiles_macos' if ansible_os_family == 'Darwin' else '' }}"
+
+- name: Deploy dotfiles from each directory
+  include_tasks: stow_directory.yml
+  # filters out any empty items from dotfiles_dirs
+  loop: "{{ dotfiles_dirs | select | list }}"
+  loop_control:
+    loop_var: dotfiles_subdir
