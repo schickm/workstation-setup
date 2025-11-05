@@ -12,6 +12,7 @@
       - xwayland-satellite
       - mako
       - libnotify
+      - papirus-icon-theme
     state: present
   become: true
 

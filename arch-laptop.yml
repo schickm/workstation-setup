@@ -6,6 +6,7 @@
     - role: display-server
       tags: display-server
     - role: dotfiles
+      tags: dotfiles
       vars:
         dotfiles_repo: https://github.com/schickm/dotfiles
         dotfiles_repo_local_destination: ~/vc/dotfiles
