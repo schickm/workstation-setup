@@ -1,0 +1,53 @@
+---
+- name: Install packages
+  ansible.builtin.package:
+    name:
+      - xdg-desktop-portal-gtk
+      - xdg-desktop-portal-gnome
+      - gnome-keyring
+      - niri
+      - pipewire-jack
+      - alacritty
+      - swaylock
+      - xwayland-satellite
+      - mako
+    state: present
+  become: true
+
+- name: Install AUR packages
+  kewlfft.aur.aur:
+    name:
+      - lidm-bin
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Create lidm systemd service file
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=TUI display manager
+      After=systemd-user-sessions.service plymouth-quit-wait.service
+
+      [Service]
+      Type=idle
+      ExecStart=/usr/bin/lidm 7
+      StandardInput=tty
+      StandardOutput=tty
+      StandardError=tty
+      TTYPath=/dev/tty7
+      TTYReset=yes
+      TTYVHangup=yes
+
+      [Install]
+      Alias=display-manager.service
+    dest: /etc/systemd/system/lidm.service
+    mode: "0644"
+    owner: root
+    group: root
+  notify: reload systemd
+
+- name: Enable lidm service
+  ansible.builtin.systemd_service:
+    name: lidm
+    enabled: yes
+    daemon_reload: yes
+  become: true

@@ -2,11 +2,22 @@
 - name: Install common packages
   ansible.builtin.package:
     name:
+      # dev tools
       - git
       - tig
       - tree
       - shellcheck
       - kakoune
       - kakoune-lsp
+      - mise
+      # needed for makepkg to work
+      - fakeroot
+      - debugedit
+
+      # system tools
+      - etckeeper
     state: present
-  become: "{{ 'false' if ansible_pkg_mgr == 'homebrew' else 'true' }}"
+  become: true
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: packages
+

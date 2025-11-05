@@ -17,6 +17,7 @@
     dotfiles_dirs:
       - dotfiles_shared
       - "{{ 'dotfiles_macos' if ansible_os_family == 'Darwin' else '' }}"
+      - "{{ 'dotfiles_linux' if ansible_os_family == 'Archlinux' else '' }}"
 
 - name: Deploy dotfiles from each directory
   include_tasks: stow_directory.yml
