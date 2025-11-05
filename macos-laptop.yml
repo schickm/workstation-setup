@@ -2,9 +2,9 @@
 
 - hosts: workstation
   roles:
-    - macos
+    #- macos
     - dotfiles-deprecated
     - dotfiles_macos
-    - kakoune
-    - ubersicht
+    #- kakoune
+    #- ubersicht
     
