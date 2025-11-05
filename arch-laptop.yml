@@ -9,4 +9,5 @@
       vars:
         dotfiles_repo: https://github.com/schickm/dotfiles
         dotfiles_repo_local_destination: ~/vc/dotfiles
-    - development-machine
+    - role: development-machine
+      tags: development-machine
