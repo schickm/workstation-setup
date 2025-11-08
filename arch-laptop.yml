@@ -2,6 +2,8 @@
 - hosts: laptop
   roles:
     - standard-dirs
+    - role: terminal-access
+      tags: terminal-access
     - kakoune
     - role: display-server
       tags: display-server
@@ -10,5 +12,7 @@
       vars:
         dotfiles_repo: https://github.com/schickm/dotfiles
         dotfiles_repo_local_destination: ~/vc/dotfiles
-    - role: development-machine
-      tags: development-machine
+    - role: work-stuff
+      tags: work-stuff
+    - role: system76-lemur-pro
+      tags: system76-lemur-pro

@@ -1,0 +1,7 @@
+---
+- name: Install AUR packages
+  kewlfft.aur.aur:
+    name:
+      - slack-desktop
+  when: ansible_facts['os_family'] == 'Archlinux'
+

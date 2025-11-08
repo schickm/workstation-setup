@@ -1,7 +1,23 @@
 
+# Setup
+
+Install ansible
+
+```
+# Arch
+pacman -S ansible
+```
+
+Install required community packages
+```
+ansible-galaxy install -r requirements.yml
+```
+
 ## Updating Arch machine
 
-
+```
+ansible-playbook -i local-inventory.yml --extra-vars=ansible_sudo_pass=(op read "op://Private/rwgps laptop - matt/password") arch-laptop.yml --tags=some-tag
+```
 
 ## Setting up on Arch Live ISO
 
@@ -19,6 +35,7 @@ This may or may not still work, as I'm switching over to Linux is a daily driver
 
 # Known areas not handled
 
- * setup of Fisher (package manager for fish shell)
-     * fisher_plugins file is not checked into source either
- * installation of nvm.fish package (via fisher)
+## arch-laptop
+
+setup of 1Password cli
+Should I make inventory part of gitignore?

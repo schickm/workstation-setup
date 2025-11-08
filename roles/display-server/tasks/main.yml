@@ -28,6 +28,8 @@
       - otf-san-francisco
       - google-chrome
       - 1password
+      - 1password-cli
+      - wluma
   when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Create lidm systemd service file
@@ -78,3 +80,8 @@
   shell: systemctl --user add-wants niri.service waybar.service
   args:
     creates: ~/.config/systemd/user/niri.service.wants/waybar.service
+
+- name: Setup Alacritty themes
+  ansible.builtin.git:
+    repo: https://github.com/alacritty/alacritty-theme.git
+    dest: ~/.config/alacritty/themes

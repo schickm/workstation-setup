@@ -2,9 +2,6 @@
 - name: Install common packages
   ansible.builtin.package:
     name:
-      # dev tools
-      - git
-      - tig
       - tree
       - shellcheck
       - kakoune
@@ -12,6 +9,11 @@
       - mise
       - man-db
       - less
+      - patch
+      - nnn
+      - clang
+      - cargo
+      - marked-man
 
       # needed for makepkg to work
       - fakeroot
