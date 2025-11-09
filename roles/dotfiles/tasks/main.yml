@@ -5,7 +5,7 @@
       - stow
       - git
     state: present
-  become: "{{ 'false' if ansible_pkg_mgr == 'homebrew' else 'true' }}"
+  become: "{{ 'false' if ansible_facts['pkg_mgr'] == 'homebrew' else 'true' }}"
 
 - name: Ensure dotfiles repository is cloned locally
   ansible.builtin.git:
@@ -16,8 +16,8 @@
   ansible.builtin.set_fact:
     dotfiles_dirs:
       - dotfiles_shared
-      - "{{ 'dotfiles_macos' if ansible_os_family == 'Darwin' else '' }}"
-      - "{{ 'dotfiles_linux' if ansible_os_family == 'Archlinux' else '' }}"
+      - "{{ 'dotfiles_macos' if ansible_facts['os_family'] == 'Darwin' else '' }}"
+      - "{{ 'dotfiles_linux' if ansible_facts['os_family'] == 'Archlinux' else '' }}"
 
 - name: Deploy dotfiles from each directory
   include_tasks: stow_directory.yml
