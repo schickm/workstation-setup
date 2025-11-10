@@ -25,3 +25,18 @@
   loop: "{{ dotfiles_dirs | select | list }}"
   loop_control:
     loop_var: dotfiles_subdir
+
+- name: Ensure fish config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/fish"
+    state: directory
+    mode: '0755'
+
+- name: Add ~/bin to fish PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/fish/config.fish"
+    block: |
+      # Add user bin directory to PATH
+      fish_add_path {{ ansible_facts['env']['HOME'] }}/bin
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - user bin path"
+    create: yes
