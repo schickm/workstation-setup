@@ -20,6 +20,8 @@
       - otf-font-awesome
       - bluez
       - bluez-utils
+      # Used for kakoune suspend-and-resume
+      - wtype
     state: present
   become: true
 
