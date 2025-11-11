@@ -6,6 +6,8 @@
       - xdg-desktop-portal-gnome
       - gnome-keyring
       - niri
+      - pipewire-pulse
+      - pipewire-alsa
       - pipewire-jack
       - alacritty
       - swaylock

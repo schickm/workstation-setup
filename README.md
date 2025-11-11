@@ -13,6 +13,15 @@ Install required community packages
 ansible-galaxy install -r requirements.yml
 ```
 
+# TUI tools installed by roles
+
+| thing        | cli app |
+| ---          | ---     |
+| git          | tig     |
+| bluetooth    | bluetui |
+| audio mixing | wiremix |
+
+
 ## Updating Arch machine
 
 ```

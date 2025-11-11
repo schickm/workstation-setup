@@ -10,7 +10,7 @@
     - role: dotfiles
       tags: dotfiles
       vars:
-        dotfiles_repo: https://github.com/schickm/dotfiles
+        dotfiles_repo: git@github.com:schickm/dotfiles.git
         dotfiles_repo_local_destination: ~/vc/dotfiles
     - role: work-stuff
       tags: work-stuff
