@@ -85,6 +85,12 @@
   args:
     creates: ~/.config/systemd/user/niri.service.wants/waybar.service
 
+- name: Ensure user has required groups for waybar
+  user:
+    name: matt
+    append: true
+    groups: input
+
 - name: Setup Alacritty themes
   ansible.builtin.git:
     repo: https://github.com/alacritty/alacritty-theme.git
