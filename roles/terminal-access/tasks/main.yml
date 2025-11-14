@@ -14,6 +14,8 @@
       - clang
       - cargo
       - marked-man
+      - zoxide
+      - fzf
 
       # needed for makepkg to work
       - fakeroot
@@ -25,3 +27,11 @@
   become: true
   when: ansible_facts['os_family'] == 'Archlinux'
   tags: packages
+
+- name: Configure zoxide for fish
+  ansible.builtin.lineinfile:
+    path: ~/.config/fish/config.fish
+    line: "zoxide init fish | source"
+    create: true
+    state: present
+
