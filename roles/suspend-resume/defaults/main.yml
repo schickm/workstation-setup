@@ -1,0 +1,6 @@
+---
+# Hook name to check/add to mkinitcpio.conf
+resume_hook_name: resume
+
+# Hook to insert after (used when adding the hook)
+resume_insert_after: filesystems

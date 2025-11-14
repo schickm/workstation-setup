@@ -1,0 +1,27 @@
+---
+- name: Check if resume hook is present in mkinitcpio HOOKS
+  ansible.builtin.lineinfile:
+    path: /etc/mkinitcpio.conf
+    regexp: '^HOOKS=\(.*\bresume\b.*\)$'
+    state: absent
+  check_mode: true
+  register: resume_hook_check
+  changed_when: false
+  become: true
+
+- name: Add resume hook after filesystems in mkinitcpio.conf
+  ansible.builtin.replace:
+    path: /etc/mkinitcpio.conf
+    regexp: '^(HOOKS=\((?:.*\s)?filesystems)(\s.*)(\))$'
+    replace: '\1 resume\2\3'
+  when: resume_hook_check.found == 0
+  become: true
+  notify: Regenerate initramfs
+  register: resume_hook_added
+
+- name: Verify resume hook is enabled
+  ansible.builtin.assert:
+    that:
+      - resume_hook_check.found > 0 or resume_hook_added is changed
+    fail_msg: "Hook 'resume' is not present in /etc/mkinitcpio.conf HOOKS"
+    success_msg: "Hook 'resume' is enabled in mkinitcpio.conf"

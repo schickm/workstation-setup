@@ -1,0 +1,36 @@
+---
+# Used this as a reference:
+# https://wiki.archlinux.org/title/Swap#Swap_file
+- name: Validate that swap_file_size is defined
+  ansible.builtin.assert:
+    that:
+      - swap_file_size is defined
+      - swap_file_size | length > 0
+    fail_msg: "swap_file_size must be defined (e.g., '4G', '8G', '16G')"
+    quiet: true
+
+- name: Check if swap file already exists
+  ansible.builtin.stat:
+    path: "{{ swap_file_path }}"
+    get_checksum: false
+  register: swap_file_stat
+  become: true
+
+- name: Create swap file
+  ansible.builtin.command:
+    cmd: mkswap -U clear --size {{ swap_file_size }} --file {{ swap_file_path }}
+  when: not swap_file_stat.stat.exists
+  become: true
+
+- name: Enable swap file
+  ansible.builtin.command:
+    cmd: swapon {{ swap_file_path }}
+  when: not swap_file_stat.stat.exists
+  become: true
+
+- name: Add swap file to /etc/fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "{{ swap_file_path }} none swap defaults 0 0"
+    state: present
+  become: true

@@ -2,6 +2,12 @@
 - hosts: laptop
   roles:
     - standard-dirs
+    - role: swap-file
+      tags: swap-file
+      vars:
+        swap_file_size: 54G
+    - role: suspend-resume
+      tags: suspend-resume
     - role: terminal-access
       tags: terminal-access
     - kakoune
