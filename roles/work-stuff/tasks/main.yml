@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name:
       - fx
+      - meld
     state: present
   become: true
 
