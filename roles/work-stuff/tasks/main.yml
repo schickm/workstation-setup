@@ -1,4 +1,11 @@
 ---
+- name: Install packages
+  ansible.builtin.package:
+    name:
+      - fx
+    state: present
+  become: true
+
 - name: Install AUR packages
   kewlfft.aur.aur:
     name:
