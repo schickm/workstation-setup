@@ -20,6 +20,8 @@
       - otf-font-awesome
       - bluez
       - bluez-utils
+      - wl-clipboard
+      - galculator
       # Used for kakoune suspend-and-resume
       - wtype
     state: present

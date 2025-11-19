@@ -16,6 +16,7 @@
       - marked-man
       - zoxide
       - fzf
+      - fd
 
       # needed for makepkg to work
       - fakeroot
