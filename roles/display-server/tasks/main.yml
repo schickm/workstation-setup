@@ -22,8 +22,17 @@
       - bluez-utils
       - wl-clipboard
       - galculator
+      - flameshot
+      - ttf-jetbrains-mono-nerd
+
       # Used for kakoune suspend-and-resume
       - wtype
+
+      # needed for localsend AUR package install
+      - fvm
+      - llvm
+      - patchelf
+      - rustup
     state: present
   become: true
 
@@ -37,6 +46,7 @@
       - 1password-cli
       - wluma
       - uair
+      - localsend
   when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Create lidm systemd service file
