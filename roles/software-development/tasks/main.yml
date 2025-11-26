@@ -1,8 +1,0 @@
----
-- name: Install common packages
-  ansible.builtin.package:
-    name:
-      - editorconfig-core-c
-    state: present
-  become: true
-  when: ansible_facts['os_family'] == 'Archlinux'

@@ -4,6 +4,8 @@
     name:
       - fx
       - meld
+      - editorconfig-core-c
+      - github-cli
     state: present
   become: true
 
@@ -11,5 +13,6 @@
   kewlfft.aur.aur:
     name:
       - slack-desktop
+      - playwright
   when: ansible_facts['os_family'] == 'Archlinux'
 
