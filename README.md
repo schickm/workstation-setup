@@ -28,14 +28,25 @@ ansible-galaxy install -r requirements.yml
 ansible-playbook -i local-inventory.yml --extra-vars=ansible_sudo_pass=(op read "op://Private/rwgps laptop - matt/password") arch-laptop.yml --tags=some-tag
 ```
 
-## Setting up on Arch Live ISO
+## Setting up on Arch Live ISO ('arch-install' role)
 
-Currently this isn't setup, but in the future these would be the minimum required:
+All that is required is setting a root password once logged in to the live ISO:
 
-1. Clone repo on machine that is executing ansible.
-1. Do bare minimum on Arch to allow Ansible to use it as a target
-  - setup a root password: `passwd`
-  - install python: `pacman -S python`
+```
+passwd
+```
+
+Tasks are all gated behind 'never' tag, so tag needs to be explicitly invoked:
+
+When running ansible, be sure to disable host key checking, since the key is going to shift after install anyways:
+
+```
+ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i local-inventory.yml --extra-vars=ansible_ssh_password=root file-server-arch.yml --tags=arch-install
+```
+Currently this isn't fully done.  Implemented so far:
+
+1. Simple partitioning of swap and root partition, but in the future these would be the minimum required:
+
 ## Setting up a Mac
 
 Clone repo and execute `setup_ansible.sh` for installing ansible on macos and triggering workstation setup

@@ -1,0 +1,13 @@
+---
+- hosts: fileserver
+  roles:
+    - role: arch-install
+      tags: arch-install
+      vars:
+        arch_install_swap_size: 8GiB
+        arch_install_disk: /dev/sda
+
+    - role: localization
+      tags: localization
+
+    - role: standard-dirs

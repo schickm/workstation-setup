@@ -1,0 +1,47 @@
+- name: Validate required variables
+  ansible.builtin.assert:
+    that:
+      - arch_install_disk is defined
+      - arch_install_disk | length > 0
+      - arch_install_swap_size is defined
+      - arch_install_swap_size | length > 0
+    fail_msg: "arch_install_disk and arch_install_swap_size must be defined (e.g., disk: '/dev/sda', swap: '8GiB')"
+  tags:
+    - never
+    - arch-install
+
+- name: Wipe all partitions from disk
+  become: true
+  ansible.builtin.command:
+    cmd: "sgdisk --zap-all {{ arch_install_disk }}"
+  changed_when: true
+  tags:
+    - never
+    - arch-install
+
+- name: Create swap partition
+  become: true
+  community.general.parted:
+    device: "{{ arch_install_disk }}"
+    number: 1
+    state: present
+    part_start: 1MiB
+    part_end: "{{ arch_install_swap_size }}"
+    fs_type: linux-swap
+  tags:
+    - never
+    - arch-install
+
+- name: Create Linux root partition
+  become: true
+  community.general.parted:
+    device: "{{ arch_install_disk }}"
+    number: 2
+    state: present
+    part_start: "{{ arch_install_swap_size }}"
+    part_end: 100%
+    fs_type: ext4
+  tags:
+    - never
+    - arch-install
+
