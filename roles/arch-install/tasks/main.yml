@@ -49,6 +49,7 @@
   tags:
     - never
     - arch-install
+    - arch-install-format
 
 - name: Format root partition
   community.general.filesystem:
@@ -57,3 +58,23 @@
   tags:
     - never
     - arch-install
+    - arch-install-format
+
+- name: Mount root filesystem
+  ansible.posix.mount:
+    path: /mnt
+    src: "{{ arch_install_disk }}2"
+    fstype: ext4
+    state: present
+  tags:
+    - never
+    - arch-install
+    - arch-install-mount
+
+- name: Turn on swap
+  ansible.builtin.command: "swapon {{ arch_install_disk }}1"
+  changed_when: true
+  tags:
+    - never
+    - arch-install
+    - arch-install-mount
