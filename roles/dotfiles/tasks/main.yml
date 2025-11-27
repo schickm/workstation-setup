@@ -1,9 +1,10 @@
 ---
-- name: Install stow and git
+- name: Install required packages
   ansible.builtin.package:
     name:
       - stow
       - git
+      - yamllint
     state: present
   become: "{{ 'false' if ansible_facts['pkg_mgr'] == 'homebrew' else 'true' }}"
 
