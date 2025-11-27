@@ -11,7 +11,6 @@
     - arch-install
 
 - name: Wipe all partitions from disk
-  become: true
   ansible.builtin.command:
     cmd: "sgdisk --zap-all {{ arch_install_disk }}"
   changed_when: true
@@ -20,7 +19,6 @@
     - arch-install
 
 - name: Create swap partition
-  become: true
   community.general.parted:
     device: "{{ arch_install_disk }}"
     number: 1
@@ -33,7 +31,6 @@
     - arch-install
 
 - name: Create Linux root partition
-  become: true
   community.general.parted:
     device: "{{ arch_install_disk }}"
     number: 2
@@ -45,3 +42,18 @@
     - never
     - arch-install
 
+- name: Format swap partition
+  community.general.filesystem:
+    device: "{{ arch_install_disk }}1"
+    fstype: swap
+  tags:
+    - never
+    - arch-install
+
+- name: Format root partition
+  community.general.filesystem:
+    device: "{{ arch_install_disk }}2"
+    fstype: ext4
+  tags:
+    - never
+    - arch-install
