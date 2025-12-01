@@ -9,6 +9,7 @@
       - pipewire-pulse
       - pipewire-alsa
       - pipewire-jack
+      - pipewire-zeroconf
       - alacritty
       - swaylock
       - xwayland-satellite
