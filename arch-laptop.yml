@@ -20,5 +20,7 @@
         dotfiles_repo_local_destination: ~/vc/dotfiles
     - role: work-stuff
       tags: work-stuff
+    - role: music-stuff
+      tags: music-stuff
     - role: system76-lemur-pro
       tags: system76-lemur-pro

@@ -8,6 +8,16 @@
     state: present
   become: "{{ 'false' if ansible_facts['pkg_mgr'] == 'homebrew' else 'true' }}"
 
+- name: Ensure certain directories exist so that stow does not turn them into symlinks
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - ".config/fish"
+    - ".local/share/applications"
+
+
 - name: Ensure dotfiles repository is cloned locally
   ansible.builtin.git:
     repo: "{{ dotfiles_repo }}"
@@ -26,12 +36,6 @@
   loop: "{{ dotfiles_dirs | select | list }}"
   loop_control:
     loop_var: dotfiles_subdir
-
-- name: Ensure fish config directory exists
-  ansible.builtin.file:
-    path: "{{ ansible_facts['env']['HOME'] }}/.config/fish"
-    state: directory
-    mode: '0755'
 
 - name: Add ~/bin to fish PATH
   ansible.builtin.blockinfile:
