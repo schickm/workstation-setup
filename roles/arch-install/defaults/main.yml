@@ -1,6 +1,0 @@
----
-# Target disk for installation (e.g., /dev/sda, /dev/nvme0n1) - REQUIRED, no default provided
-# arch_install_disk: /dev/sda
-
-# Swap partition size (e.g., 8GiB, 16GiB) - REQUIRED, no default provided
-# arch_install_swap_size: 8GiB
