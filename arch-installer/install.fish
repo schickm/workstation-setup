@@ -66,7 +66,7 @@ end
 function installation
     log Installation
     pacstrap -K /mnt base linux linux-firmware intel-ucode grub fish \
-        networkmanager openssh sudo which
+        networkmanager openssh sudo which python
     check_error
 
     log Fstab
