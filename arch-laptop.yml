@@ -24,3 +24,7 @@
       tags: music-stuff
     - role: system76-lemur-pro
       tags: system76-lemur-pro
+    - role: zeroconf
+      tags: zeroconf
+      vars:
+        zeroconf_publish_workstation: "no"

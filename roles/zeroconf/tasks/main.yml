@@ -1,0 +1,33 @@
+- name: Install zeroconf packages
+  ansible.builtin.package:
+    name:
+      - avahi
+      - nss-mdns
+    state: present
+  become: true
+
+- name: Enable avahi service
+  systemd_service:
+    name: avahi-daemon
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
+
+- name: Configure hostname resultion to use zeroconf
+  become: true
+  lineinfile:
+    path: /etc/nsswitch.conf
+    backrefs: true
+    state: present
+    regexp: '^(hosts:(?!.*mdns_minimal).*) resolve\s?(.*)$'
+    line: '\1 mdns_minimal [NOTFOUND=return] resolve \2'
+    backup: true
+
+- name: Configure workstation publishing in avahi
+  become: true
+  lineinfile:
+    path: /etc/avahi/avahi-daemon.conf
+    regexp: '^#?\s*publish-workstation='
+    line: 'publish-workstation={{ zeroconf_publish_workstation }}'
+    state: present

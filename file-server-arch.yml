@@ -14,3 +14,7 @@
         dotfiles_repo: git@github.com:schickm/dotfiles.git
         dotfiles_repo_local_destination: ~/vc/dotfiles
 
+    - role: zeroconf
+      tags: zeroconf
+      vars:
+        zeroconf_publish_workstation: "yes"
