@@ -17,6 +17,7 @@
       - zoxide
       - fzf
       - fd
+      - htop
 
       # needed for makepkg to work
       - fakeroot
