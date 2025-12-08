@@ -84,6 +84,8 @@ end
 
 function setup_localization
     log Localization
+    sed -i 's/^#\(en_US.UTF-8 UTF-8\)/\1/' /mnt/etc/locale.gen
+    check_error
     arch-chroot /mnt fish -c locale-gen
     check_error
     arch-chroot /mnt fish -c 'echo "LANG=en_US.UTF-8" >/etc/locale.conf'
