@@ -36,16 +36,17 @@ All that is required is setting a root password once logged in to the live ISO:
 passwd
 ```
 
-Tasks are all gated behind 'never' tag, so tag needs to be explicitly invoked:
-
-When running ansible, be sure to disable host key checking, since the key is going to shift after install anyways:
+Then copy over the setup files:
 
 ```
-ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i local-inventory.yml --extra-vars=ansible_ssh_password=root file-server-arch.yml --tags=arch-install
+scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null arch-installer root@<machine ip addr>
 ```
-Currently this isn't fully done.  Implemented so far:
 
-1. Simple partitioning of swap and root partition, but in the future these would be the minimum required:
+Then run the installer:
+
+```
+ssh -t -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@<machine ip addr> "cd ~/arch-installer && sh bootstrap_install.sh"
+```
 
 ## Setting up a Mac
 
