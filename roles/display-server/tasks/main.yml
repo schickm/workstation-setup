@@ -12,6 +12,7 @@
       - pipewire-zeroconf
       - alacritty
       - swaylock
+      - swayidle
       - xwayland-satellite
       - mako
       - libnotify
@@ -25,6 +26,7 @@
       - galculator
       - flameshot
       - ttf-jetbrains-mono-nerd
+      - noto-fonts-emoji
 
       # Used for kakoune suspend-and-resume
       - wtype
@@ -48,6 +50,7 @@
       - wluma
       - uair
       - localsend
+      - bemoji-git
   when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Create lidm systemd service file
