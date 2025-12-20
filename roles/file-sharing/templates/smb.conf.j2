@@ -1,0 +1,16 @@
+[global]
+   workgroup = WORKGROUP
+   server string = File Server
+   security = user
+   map to guest = Bad User
+   guest account = nobody
+   logging = systemd
+
+[{{ file_sharing_share_name }}]
+   path = /srv/files
+   browseable = yes
+   read only = yes
+   guest ok = yes
+   public = yes
+   force user = nobody
+   force group = {{ file_sharing_group_name }}
