@@ -7,6 +7,7 @@
       - editorconfig-core-c
       - github-cli
       - docker
+      - docker-compose
     state: present
   become: true
 
@@ -16,3 +17,10 @@
       - slack-desktop
       - playwright
   when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Ensure user has required groups for docker
+  become: true
+  user:
+    name: matt
+    append: true
+    groups: docker
