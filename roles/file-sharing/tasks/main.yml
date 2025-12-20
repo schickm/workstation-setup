@@ -1,0 +1,34 @@
+---
+- name: Install packages
+  become: true
+  ansible.builtin.package:
+    name:
+      - lvm2
+
+- name: Verify file_sharing_physical_volumes is defined and not empty
+  ansible.builtin.assert:
+    that:
+      - file_sharing_physical_volumes is defined
+      - file_sharing_physical_volumes | length > 0
+    fail_msg: "file_sharing_physical_volumes must be defined and contain at least one device"
+
+- name: Create physical volumes
+  become: true
+  community.general.lvm_pv:
+    device: "{{ item }}"
+    resize: true
+  loop: "{{ file_sharing_physical_volumes }}"
+
+- name: Verify file_sharing_vg_name is defined
+  ansible.builtin.assert:
+    that:
+      - file_sharing_vg_name is defined
+      - file_sharing_vg_name | length > 0
+    fail_msg: "file_sharing_vg_name must be defined and not empty"
+
+- name: Create volume group
+  become: true
+  community.general.lvg:
+    vg: "{{ file_sharing_vg_name }}"
+    pvs: "{{ file_sharing_physical_volumes | join(',') }}"
+    state: present
