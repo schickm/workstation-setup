@@ -1,34 +1,87 @@
 ---
 - name: Install packages
+  tags:
+    - file-sharing
   become: true
   ansible.builtin.package:
     name:
       - lvm2
 
-- name: Verify file_sharing_physical_volumes is defined and not empty
+- name: Verify file_sharing_disks is defined and not empty
+  tags:
+    - file-sharing
   ansible.builtin.assert:
     that:
-      - file_sharing_physical_volumes is defined
-      - file_sharing_physical_volumes | length > 0
-    fail_msg: "file_sharing_physical_volumes must be defined and contain at least one device"
+      - file_sharing_disks is defined
+      - file_sharing_disks | length > 0
+    fail_msg: "file_sharing_disks must be defined and contain at least one device"
+
+- name: Wipe all signatures from disks
+  become: true
+  ansible.builtin.command:
+    cmd: "wipefs -a {{ item }}"
+  loop: "{{ file_sharing_disks }}"
+  tags:
+    - never
+    - destroy-disks
+
+- name: Create GPT partition table and LVM partition on disks
+  tags:
+    - file-sharing
+  become: true
+  community.general.parted:
+    device: "{{ item }}"
+    label: gpt
+    number: 1
+    part_start: 0%
+    part_end: 100%
+    flags: [lvm]
+    state: present
+  loop: "{{ file_sharing_disks }}"
 
 - name: Create physical volumes
+  tags:
+    - file-sharing
   become: true
   community.general.lvm_pv:
-    device: "{{ item }}"
+    device: "{{ item }}1"
     resize: true
-  loop: "{{ file_sharing_physical_volumes }}"
-
-- name: Verify file_sharing_vg_name is defined
-  ansible.builtin.assert:
-    that:
-      - file_sharing_vg_name is defined
-      - file_sharing_vg_name | length > 0
-    fail_msg: "file_sharing_vg_name must be defined and not empty"
+  loop: "{{ file_sharing_disks }}"
 
 - name: Create volume group
+  tags:
+    - file-sharing
   become: true
   community.general.lvg:
     vg: "{{ file_sharing_vg_name }}"
-    pvs: "{{ file_sharing_physical_volumes | join(',') }}"
+    pvs: "{{ file_sharing_disks | map('regex_replace', '$', '1') | join(',') }}"
     state: present
+
+- name: Create logical volume
+  tags:
+    - file-sharing
+  become: true
+  community.general.lvol:
+    vg: "{{ file_sharing_vg_name }}"
+    lv: "{{ file_sharing_vg_name }}"
+    size: 100%VG
+    state: present
+
+- name: Create ext4 filesystem on logical volume
+  tags:
+    - file-sharing
+  become: true
+  community.general.filesystem:
+    fstype: ext4
+    dev: "/dev/{{ file_sharing_vg_name }}/{{ file_sharing_vg_name }}"
+    state: present
+
+- name: Mount logical volume at /srv/files
+  tags:
+    - file-sharing
+  become: true
+  ansible.posix.mount:
+    path: /srv/files
+    src: "/dev/{{ file_sharing_vg_name }}/{{ file_sharing_vg_name }}"
+    fstype: ext4
+    state: mounted
