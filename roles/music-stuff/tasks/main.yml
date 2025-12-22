@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name:
       - vlc
+      - vlc-plugins-all
       - audacity
     state: present
   become: true
