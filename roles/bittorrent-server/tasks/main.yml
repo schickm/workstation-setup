@@ -1,0 +1,63 @@
+---
+- name: Install transmission
+  become: true
+  ansible.builtin.package:
+    name:
+      - transmission-cli
+    state: present
+
+- name: Add transmission user to "{{ bittorrent_file_creation_group }}" group
+  become: true
+  ansible.builtin.user:
+    name: "{{ bittorrent_user }}"
+    groups: "{{ bittorrent_file_creation_group }}"
+    append: true
+
+- name: Create transmission base directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ bittorrent_base_path }}"
+    owner: "{{ bittorrent_user }}"
+    group: "{{ bittorrent_file_creation_group }}"
+    mode: '2775'
+    state: directory
+
+- name: Create transmission subdirectories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ bittorrent_user }}"
+    group: "{{ bittorrent_file_creation_group }}"
+    mode: '2775'
+    state: directory
+  loop:
+    - "{{ bittorrent_download_path }}"
+    - "{{ bittorrent_incomplete_path }}"
+    - "{{ bittorrent_watch_path }}"
+
+- name: Create transmission config directory
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/transmission/.config/transmission-daemon
+    owner: "{{ bittorrent_user }}"
+    group: "{{ bittorrent_user }}"
+    mode: '0755'
+    state: directory
+
+- name: Deploy transmission configuration
+  become: true
+  ansible.builtin.template:
+    src: settings.json.j2
+    dest: /var/lib/transmission/.config/transmission-daemon/settings.json
+    owner: "{{ bittorrent_user }}"
+    group: "{{ bittorrent_user }}"
+    mode: '0600'
+  notify: restart transmission
+
+- name: Enable and start transmission service
+  become: true
+  ansible.builtin.systemd_service:
+    name: transmission
+    enabled: true
+    state: started
+    daemon_reload: true

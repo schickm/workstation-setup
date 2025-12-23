@@ -1,0 +1,21 @@
+{
+    "download-dir": "{{ bittorrent_download_path }}",
+    "incomplete-dir": "{{ bittorrent_incomplete_path }}",
+    "incomplete-dir-enabled": true,
+    "watch-dir": "{{ bittorrent_watch_path }}",
+    "watch-dir-enabled": true,
+    "rpc-enabled": true,
+    "rpc-port": {{ bittorrent_rpc_port }},
+    "rpc-bind-address": "0.0.0.0",
+    "rpc-whitelist-enabled": false,
+    "rpc-host-whitelist-enabled": false,
+    "rpc-authentication-required": false,
+    "peer-port": {{ bittorrent_peer_port }},
+    "port-forwarding-enabled": true,
+    "encryption": 1,
+    "dht-enabled": true,
+    "pex-enabled": true,
+    "lpd-enabled": true,
+    "umask": 2,
+    "ratio-limit-enabled": false
+}

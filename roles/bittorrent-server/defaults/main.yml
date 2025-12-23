@@ -1,0 +1,9 @@
+---
+bittorrent_base_path: /srv/files/public-transmission
+bittorrent_download_path: "{{ bittorrent_base_path }}/downloads"
+bittorrent_incomplete_path: "{{ bittorrent_base_path }}/incomplete"
+bittorrent_watch_path: "{{ bittorrent_base_path }}/torrents"
+bittorrent_user: transmission
+bittorrent_rpc_port: 9091
+bittorrent_peer_port: 51413
+bittorrent_file_creation_group: filesusers
