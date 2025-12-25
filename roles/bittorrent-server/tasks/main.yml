@@ -6,6 +6,16 @@
       - transmission-cli
     state: present
 
+# This is necesasry because transimssion rewrites it's settings.json
+# file when it shuts down. Since part of this playbook is possibly
+# uploading a changed settings file, then we want to first shutdown
+# the server so the settings don't get overwritten
+- name: Stop transmission service if running
+  become: true
+  ansible.builtin.systemd_service:
+    name: transmission
+    state: stopped
+
 - name: Add transmission user to "{{ bittorrent_file_creation_group }}" group
   become: true
   ansible.builtin.user:
@@ -52,7 +62,6 @@
     owner: "{{ bittorrent_user }}"
     group: "{{ bittorrent_user }}"
     mode: '0600'
-  notify: restart transmission
 
 - name: Enable and start transmission service
   become: true

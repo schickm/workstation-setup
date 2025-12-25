@@ -1,6 +1,0 @@
----
-- name: restart transmission
-  ansible.builtin.systemd_service:
-    name: transmission
-    state: restarted
-  become: true
