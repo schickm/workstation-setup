@@ -27,6 +27,7 @@
       - flameshot
       - ttf-jetbrains-mono-nerd
       - noto-fonts-emoji
+      - gvfs-smb
 
       # Used for kakoune suspend-and-resume
       - wtype
