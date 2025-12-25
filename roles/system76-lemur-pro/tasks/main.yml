@@ -5,15 +5,27 @@
       - system76-firmware
     state: present
   become: true
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Install AUR packages
   kewlfft.aur.aur:
     name:
-      - lidm-bin
-      - otf-san-francisco
-      - google-chrome
-      - 1password
-      - 1password-cli
-      - wluma
+      - system76-dkms-git
+      - system76-driver
+      - system76-power
+      - system76-keyboard-configurator
   when: ansible_facts['os_family'] == 'Archlinux'
 
+# left off here - I've added things as described in the wiki, but
+# I'm still not able to get the backlight working...not sure whats
+# going on.
+- name: Enable systemd services
+  systemd_service:
+    name: "{{ item }}"
+    enabled: yes
+    daemon_reload: yes
+  become: true
+  loop:
+    - system76
+    - system76-firmware-daemon
+    - com.system76.PowerDaemon
