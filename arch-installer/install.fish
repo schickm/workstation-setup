@@ -80,6 +80,8 @@ function setup_time
     check_error
     arch-chroot /mnt hwclock --systohc
     check_error
+    systemctl --root=/mnt enable systemd-timesyncd
+    check_error
 end
 
 function setup_localization
@@ -102,6 +104,11 @@ function setup_network
         systemctl --root=/mnt enable "$service"
         check_error
     end
+end
+
+function setup_timesync
+    systemctl --root=/mnt enable systemd-timesyncd
+    check_error
 end
 
 function setup_bootloader
