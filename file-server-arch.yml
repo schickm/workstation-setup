@@ -19,3 +19,6 @@
       vars:
         zeroconf_publish_workstation: "yes"
     - role: file-sharing
+      tags: file-sharing
+    - role: bittorrent-server
+      tags: bittorrent-server
