@@ -28,3 +28,5 @@
       tags: zeroconf
       vars:
         zeroconf_publish_workstation: "no"
+    - role: backups
+      tags: backups

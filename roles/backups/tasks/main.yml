@@ -1,0 +1,25 @@
+---
+- name: Validate required backup variables
+  ansible.builtin.assert:
+    that:
+      - backups_application_key_id is defined
+      - backups_application_key_id | length > 0
+      - backups_application_key is defined
+      - backups_application_key | length > 0
+    fail_msg: "backups_application_key_id and backups_application_key must be defined in inventory"
+    success_msg: "Required backup variables are defined"
+
+- name: Install AUR packages
+  kewlfft.aur.aur:
+    name:
+      - backblaze-b2-bin
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Authorize Backblaze B2 account
+  ansible.builtin.command:
+    cmd: bbb2 account authorize
+  environment:
+    B2_APPLICATION_KEY_ID: "{{ backups_application_key_id }}"
+    B2_APPLICATION_KEY: "{{ backups_application_key }}"
+  no_log: true
+  changed_when: true
