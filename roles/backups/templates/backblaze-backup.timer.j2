@@ -1,0 +1,11 @@
+[Unit]
+Description=Backblaze B2 Backup Timer
+Requires=backblaze-backup.service
+
+[Timer]
+OnCalendar={{ backups_schedule | default('daily') }}
+Persistent=true
+RandomizedDelaySec=1h
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Backblaze B2 Backup Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backblaze-backup.sh
+EnvironmentFile=/etc/backblaze-backup.env

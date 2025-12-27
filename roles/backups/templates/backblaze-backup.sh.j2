@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+# Function to perform backup with error handling
+backup_directory() {
+    local local_path="$1"
+    local bucket="$2"
+    local prefix="$3"
+    local keep_days="$4"
+    local exclude_regex="$5"
+
+    echo "Starting backup: $local_path -> b2://$bucket/$prefix"
+
+    local cmd="bbb2 sync --no-progress --exclude-all-symlinks --destination-server-side-encryption SSE-B2 --keep-days $keep_days"
+
+    if [ -n "$exclude_regex" ]; then
+        cmd="$cmd --exclude-regex \"$exclude_regex\""
+    fi
+
+    cmd="$cmd \"$local_path\" \"b2://$bucket/$prefix\""
+
+    if eval "$cmd"; then
+        echo "✓ Backup completed: $local_path"
+    else
+        echo "✗ Backup failed: $local_path" >&2
+        return 1
+    fi
+}
+
+# Generated backup configurations
+{% for dir in backups_directories %}
+backup_directory \
+    "{{ dir.local_path }}" \
+    "{{ dir.bucket }}" \
+    "{{ dir.prefix | default('') }}" \
+    "{{ dir.keep_days | default(30) }}" \
+    "{{ dir.exclude_regex | default('') }}"
+
+{% endfor %}
+
+echo "All backups completed"
