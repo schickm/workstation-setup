@@ -7,7 +7,7 @@
    logging = systemd
 
 [{{ file_sharing_share_name }}]
-   path = /srv/files
+   path = {{ file_sharing_mount_point }}
    browseable = yes
    read only = yes
    guest ok = yes

@@ -77,12 +77,12 @@
     dev: "/dev/{{ file_sharing_vg_name }}/{{ file_sharing_vg_name }}"
     state: present
 
-- name: Mount logical volume at /srv/files
+- name: Mount logical volume
   tags:
     - file-sharing
   become: true
   ansible.posix.mount:
-    path: /srv/files
+    path: "{{ file_sharing_mount_point }}"
     src: "/dev/{{ file_sharing_vg_name }}/{{ file_sharing_vg_name }}"
     fstype: ext4
     state: mounted
@@ -104,12 +104,12 @@
     groups: "{{ file_sharing_group_name }}"
     append: true
 
-- name: Set ownership and permissions on /srv/files
+- name: Set ownership and permissions on mount point
   tags:
     - file-sharing
   become: true
   ansible.builtin.file:
-    path: /srv/files
+    path: "{{ file_sharing_mount_point }}"
     owner: root
     group: "{{ file_sharing_group_name }}"
     mode: '2775'

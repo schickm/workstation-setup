@@ -1,4 +1,5 @@
 ---
+file_sharing_mount_point: /srv/files
 file_sharing_vg_name: files
 file_sharing_group_name: filesusers
 file_sharing_share_name: files
