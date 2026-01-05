@@ -123,7 +123,8 @@ function setup_users
     log "Set up users"
     echo "$root_pass" | arch-chroot /mnt passwd --stdin root
     check_error
-    echo "%wheel ALL=(ALL:ALL) ALL" >/mnt/etc/sudoers.d/wheel
+    echo "%wheel ALL=(ALL:ALL) ALL
+%wheel ALL=(ALL) NOPASSWD: /usr/bin/pacman" >/mnt/etc/sudoers.d/wheel
     check_error
     arch-chroot /mnt useradd \
         --create-home \

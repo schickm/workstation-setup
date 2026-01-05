@@ -14,6 +14,8 @@
       - system76-driver
       - system76-power
       - system76-keyboard-configurator
+  become: true
+  become_user: aur_builder
   when: ansible_facts['os_family'] == 'Archlinux'
 
 # left off here - I've added things as described in the wiki, but

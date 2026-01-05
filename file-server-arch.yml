@@ -1,6 +1,8 @@
 ---
 - hosts: fileserver
   roles:
+    - role: ansible-prerequisites
+      tags: ansible-prerequisites
     - role: localization
       tags: localization
 

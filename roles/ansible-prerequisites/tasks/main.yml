@@ -1,0 +1,32 @@
+---
+# Taken from
+# https://github.com/kewlfft/ansible-aur?tab=readme-ov-file#create-the-aur_builder-user
+
+- name: "ansible-aur: Create the `aur_builder` user"
+  become: true
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: true
+    group: wheel
+
+- name: "ansible-aur: Allow the `aur_builder` user to run `sudo pacman` without a password"
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: true
+    mode: 0644
+    validate: 'visudo -cf %s'
+
+- name: Install yay
+  kewlfft.aur.aur:
+    name:
+      - yay
+  become: true
+  become_user: aur_builder
+  when: ansible_facts['os_family'] == 'Archlinux'
+  register: yay_install
+
+- name: Generate yay development package database
+  ansible.builtin.command: yay -Y --gendb
+  when: yay_install.changed

@@ -1,6 +1,8 @@
 ---
 - hosts: laptop
   roles:
+    - role: ansible-prerequisites
+      tags: ansible-prerequisites
     - standard-dirs
     - role: swap-file
       tags: swap-file
