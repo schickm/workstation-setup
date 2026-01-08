@@ -16,6 +16,7 @@
     name:
       - slack-desktop
       - playwright
+      - claude-code
   become: true
   become_user: aur_builder
   when: ansible_facts['os_family'] == 'Archlinux'
