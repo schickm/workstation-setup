@@ -43,5 +43,6 @@
     block: |
       # Add user bin directory to PATH
       fish_add_path {{ ansible_facts['env']['HOME'] }}/bin
+      fish_add_path {{ ansible_facts['env']['HOME'] }}/.local/bin
     marker: "# {mark} ANSIBLE MANAGED BLOCK - user bin path"
     create: yes
