@@ -20,6 +20,9 @@
 
 - name: Get existing buckets
   command: "bbb2 bucket get {{ item.bucket }}"
+  environment:
+    B2_APPLICATION_KEY_ID: "{{ backups_application_key_id }}"
+    B2_APPLICATION_KEY: "{{ backups_application_key }}"
   loop: "{{ backups_directories }}"
   register: bucket_check
   changed_when: false

@@ -24,3 +24,5 @@
       tags: file-sharing
     - role: bittorrent-server
       tags: bittorrent-server
+    - role: backups
+      tags: backups
