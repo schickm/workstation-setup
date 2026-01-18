@@ -1,0 +1,16 @@
+[Unit]
+Description=Transmission BitTorrent Daemon ({{ instance.name }})
+After=network.target
+
+[Service]
+User={{ bittorrent_server_user }}
+Type=notify
+ExecStart=/usr/bin/transmission-daemon --foreground --config-dir {{ instance.base_path }}/.config/transmission-daemon
+ExecReload=/bin/kill -s HUP $MAINPID
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+ProtectSystem=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

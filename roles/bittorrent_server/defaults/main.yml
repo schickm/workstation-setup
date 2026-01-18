@@ -1,0 +1,17 @@
+---
+# List of transmission instances to configure
+# Example:
+#   bittorrent_server_instances:
+#     - name: private
+#       base_path: /srv/files/transmission-private
+#       rpc_port: 9091
+#       peer_port: 51413
+#     - name: public
+#       base_path: /srv/files/transmission-public
+#       rpc_port: 9092
+#       peer_port: 51414
+bittorrent_server_instances: []
+
+# User and group for all instances
+bittorrent_server_user: transmission
+bittorrent_server_group: filesusers

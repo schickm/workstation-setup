@@ -22,7 +22,7 @@
         zeroconf_publish_workstation: "yes"
     - role: file-sharing
       tags: file-sharing
-    - role: bittorrent-server
-      tags: bittorrent-server
+    - role: bittorrent_server
+      tags: bittorrent_server
     - role: backups
       tags: backups

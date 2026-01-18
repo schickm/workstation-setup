@@ -1,0 +1,106 @@
+---
+- name: Install transmission
+  become: true
+  ansible.builtin.package:
+    name:
+      - transmission-cli
+    state: present
+
+# Stop all transmission services before config changes
+# This is necessary because transmission rewrites its settings.json
+# file when it shuts down
+- name: Stop transmission instance services
+  become: true
+  ansible.builtin.systemd_service:
+    name: "transmission@{{ item.name }}"
+    state: stopped
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
+  failed_when: false
+
+- name: Add transmission user to file creation group
+  become: true
+  ansible.builtin.user:
+    name: "{{ bittorrent_server_user }}"
+    groups: "{{ bittorrent_server_group }}"
+    append: true
+
+- name: Deploy transmission systemd service for each instance
+  become: true
+  ansible.builtin.template:
+    src: transmission@.service.j2
+    dest: "/etc/systemd/system/transmission@{{ item.name }}.service"
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    instance: "{{ item }}"
+
+- name: Reload systemd daemon
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Create instance base directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.base_path }}"
+    owner: "{{ bittorrent_server_user }}"
+    group: "{{ bittorrent_server_group }}"
+    mode: '2775'
+    state: directory
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create instance subdirectories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.0.base_path }}/{{ item.1 }}"
+    owner: "{{ bittorrent_server_user }}"
+    group: "{{ bittorrent_server_group }}"
+    mode: '2775'
+    state: directory
+  loop: "{{ bittorrent_server_instances | product(['downloads', 'incomplete', 'torrents']) | list }}"
+  loop_control:
+    label: "{{ item.0.name }}/{{ item.1 }}"
+
+- name: Create instance config directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item.base_path }}/.config/transmission-daemon"
+    owner: "{{ bittorrent_server_user }}"
+    group: "{{ bittorrent_server_user }}"
+    mode: '0755'
+    state: directory
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Deploy transmission configuration for each instance
+  become: true
+  ansible.builtin.template:
+    src: settings.json.j2
+    dest: "{{ item.base_path }}/.config/transmission-daemon/settings.json"
+    owner: "{{ bittorrent_server_user }}"
+    group: "{{ bittorrent_server_user }}"
+    mode: '0600'
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
+  vars:
+    instance: "{{ item }}"
+
+- name: Enable and start transmission instances
+  become: true
+  ansible.builtin.systemd_service:
+    name: "transmission@{{ item.name }}"
+    enabled: true
+    state: started
+  loop: "{{ bittorrent_server_instances }}"
+  loop_control:
+    label: "{{ item.name }}"
