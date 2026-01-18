@@ -1,0 +1,9 @@
+---
+# List of sites to reverse proxy
+# Example:
+#   caddy_proxy_sites:
+#     - hostname: public-torrents.local
+#       upstream: localhost:9092
+#     - hostname: private-torrents.local
+#       upstream: localhost:9091
+caddy_proxy_sites: []

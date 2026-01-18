@@ -1,0 +1,13 @@
+[Unit]
+Description=Publish %i.local as address via Avahi
+After=avahi-daemon.service
+Requires=avahi-daemon.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/avahi-publish -a -R %i.local {{ ansible_facts['default_ipv4']['address'] }}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

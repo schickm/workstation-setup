@@ -1,2 +1,10 @@
 ---
 zeroconf_publish_workstation: "no"
+
+# Additional hostnames to publish as CNAMEs pointing to this host
+# Example:
+#   zeroconf_cnames:
+#     - public-torrents
+#     - private-torrents
+# This will publish public-torrents.local and private-torrents.local
+zeroconf_cnames: []

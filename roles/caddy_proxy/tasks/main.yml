@@ -1,0 +1,25 @@
+---
+- name: Install caddy
+  become: true
+  ansible.builtin.package:
+    name:
+      - caddy
+    state: present
+
+- name: Deploy Caddyfile
+  become: true
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload caddy
+
+- name: Enable and start caddy service
+  become: true
+  ansible.builtin.systemd_service:
+    name: caddy
+    enabled: true
+    state: started
+    daemon_reload: true

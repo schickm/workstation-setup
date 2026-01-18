@@ -1,0 +1,9 @@
+# Caddy reverse proxy configuration
+# Managed by Ansible - do not edit manually
+
+{% for site in caddy_proxy_sites %}
+http://{{ site.hostname }} {
+    reverse_proxy {{ site.upstream }}
+}
+
+{% endfor %}

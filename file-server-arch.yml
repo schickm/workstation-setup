@@ -24,5 +24,7 @@
       tags: file-sharing
     - role: bittorrent_server
       tags: bittorrent_server
+    - role: caddy_proxy
+      tags: caddy_proxy
     - role: backups
       tags: backups
