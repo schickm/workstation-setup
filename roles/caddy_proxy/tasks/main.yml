@@ -1,4 +1,12 @@
 ---
+- name: Validate auth credentials are provided when auth is enabled
+  ansible.builtin.assert:
+    that:
+      - caddy_proxy_auth_username | length > 0
+      - caddy_proxy_auth_password_hash | length > 0
+    fail_msg: "caddy_proxy_auth_username and caddy_proxy_auth_password_hash must be set when any site has auth: true"
+  when: caddy_proxy_sites | selectattr('auth', 'defined') | selectattr('auth') | list | length > 0
+
 - name: Install caddy
   become: true
   ansible.builtin.package:

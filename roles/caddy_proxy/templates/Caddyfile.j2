@@ -3,6 +3,11 @@
 
 {% for site in caddy_proxy_sites %}
 http://{{ site.hostname }} {
+{% if site.auth | default(false) %}
+    basicauth {
+        {{ caddy_proxy_auth_username }} {{ caddy_proxy_auth_password_hash }}
+    }
+{% endif %}
     reverse_proxy {{ site.upstream }}
 }
 

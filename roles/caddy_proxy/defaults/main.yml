@@ -6,4 +6,13 @@
 #       upstream: localhost:9092
 #     - hostname: private-torrents.local
 #       upstream: localhost:9091
+#       auth: true
 caddy_proxy_sites: []
+
+# Global basic auth credentials for sites with auth: true
+# Generate password hash with: caddy hash-password
+# Example:
+#   caddy_proxy_auth_username: admin
+#   caddy_proxy_auth_password_hash: $2a$14$...
+caddy_proxy_auth_username: ""
+caddy_proxy_auth_password_hash: ""
