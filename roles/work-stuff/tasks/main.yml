@@ -8,6 +8,8 @@
       - github-cli
       - docker
       - docker-compose
+      - socat
+      - bubblewrap
     state: present
   become: true
 
