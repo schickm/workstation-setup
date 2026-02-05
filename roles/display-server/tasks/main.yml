@@ -10,7 +10,7 @@
       - pipewire-alsa
       - pipewire-jack
       - pipewire-zeroconf
-      - alacritty
+      - kitty
       - swaylock
       - swayidle
       - xwayland-satellite
@@ -119,8 +119,3 @@
     name: matt
     append: true
     groups: input
-
-- name: Setup Alacritty themes
-  ansible.builtin.git:
-    repo: https://github.com/alacritty/alacritty-theme.git
-    dest: ~/.config/alacritty/themes
