@@ -1,0 +1,10 @@
+[Unit]
+Description=GitHub Worktree Cleanup Timer
+Requires=github-worktree-cleanup.service
+
+[Timer]
+OnCalendar={{ github_worktree_cleanup_schedule }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,5 @@
+---
+# Each entry: { path: "/path/to/repo", exclude_branches: ["branch1"] }
+# exclude_branches is optional
+github_worktree_cleanup_repos: []
+github_worktree_cleanup_schedule: "hourly"

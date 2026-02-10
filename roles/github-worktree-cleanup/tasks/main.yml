@@ -1,0 +1,52 @@
+---
+- name: Validate required variables
+  ansible.builtin.assert:
+    that:
+      - github_worktree_cleanup_repos is defined
+      - github_worktree_cleanup_repos is iterable
+      - github_worktree_cleanup_repos | length > 0
+      - github_worktree_cleanup_repos | map(attribute='path') | list | length > 0
+    fail_msg: "github_worktree_cleanup_repos must be defined and non-empty, each entry must have a 'path' key"
+    success_msg: "Required worktree cleanup variables are defined"
+
+- name: Ensure ~/.local/bin/ directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.local/bin"
+    state: directory
+    mode: "0755"
+
+- name: Ensure ~/.config/systemd/user/ directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config/systemd/user"
+    state: directory
+    mode: "0755"
+
+- name: Deploy worktree cleanup script
+  ansible.builtin.template:
+    src: github-worktree-cleanup.sh.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.local/bin/github-worktree-cleanup.sh"
+    mode: "0755"
+
+- name: Deploy systemd service unit
+  ansible.builtin.template:
+    src: github-worktree-cleanup.service.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/github-worktree-cleanup.service"
+    mode: "0644"
+
+- name: Deploy systemd timer unit
+  ansible.builtin.template:
+    src: github-worktree-cleanup.timer.j2
+    dest: "{{ ansible_facts['user_dir'] }}/.config/systemd/user/github-worktree-cleanup.timer"
+    mode: "0644"
+
+- name: Reload user systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+
+- name: Enable and start worktree cleanup timer
+  ansible.builtin.systemd:
+    name: github-worktree-cleanup.timer
+    enabled: true
+    state: started
+    scope: user
