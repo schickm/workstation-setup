@@ -30,5 +30,7 @@
       tags: zeroconf
       vars:
         zeroconf_publish_workstation: "no"
+    - role: github-worktree-cleanup
+      tags: github-worktree-cleanup
     - role: backups
       tags: backups

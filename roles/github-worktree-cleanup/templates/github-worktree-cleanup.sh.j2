@@ -15,20 +15,20 @@ had_errors=0
 {% for repo in github_worktree_cleanup_repos %}
 echo "=== Processing repo: {{ repo.path }} ==="
 
-{% if repo.exclude_branches | default([]) %}
-exclude_branches=(
-{% for branch in repo.exclude_branches %}
-    "{{ branch }}"
+{% if repo.exclude_worktrees | default([]) %}
+exclude_worktrees=(
+{% for wt in repo.exclude_worktrees %}
+    "{{ wt }}"
 {% endfor %}
 )
 {% else %}
-exclude_branches=()
+exclude_worktrees=()
 {% endif %}
 
 is_excluded() {
-    local branch="$1"
-    for excluded in "${exclude_branches[@]}"; do
-        if [ "$branch" = "$excluded" ]; then
+    local dir_name="$1"
+    for excluded in "${exclude_worktrees[@]}"; do
+        if [ "$dir_name" = "$excluded" ]; then
             return 0
         fi
     done
@@ -80,9 +80,10 @@ else
             elif [ -z "$line" ]; then
                 # End of worktree entry — process it
                 if [ -n "$current_branch" ] && [ "$current_branch" != "$main_branch" ] && [ -n "$current_path" ]; then
-                    # Check if branch is excluded
-                    if is_excluded "$current_branch"; then
-                        echo "  Skipping excluded branch: $current_branch"
+                    # Check if worktree directory is excluded
+                    local_dir_name="${current_path##*/}"
+                    if is_excluded "$local_dir_name"; then
+                        echo "  Skipping excluded worktree: $local_dir_name"
                         current_path=""
                         current_branch=""
                         continue
@@ -90,21 +91,15 @@ else
 
                     echo "  Checking worktree: $current_path (branch: $current_branch)"
 
-                    # Safety check: uncommitted/untracked changes
-                    if [ -n "$(git -C "$current_path" status --porcelain 2>/dev/null)" ]; then
-                        echo "  ERROR: $current_path has uncommitted or untracked changes, skipping" >&2
-                        had_errors=1
-                        current_path=""
-                        current_branch=""
-                        continue
-                    fi
-
                     # Check PR status to decide what to do
                     open_prs=$(gh pr list --repo "$github_repo" --state open --head "$current_branch" --json number --jq 'length' 2>/dev/null || echo "0")
                     merged_prs=$(gh pr list --repo "$github_repo" --state merged --head "$current_branch" --json number --jq 'length' 2>/dev/null || echo "0")
 
                     if [ "$open_prs" -gt 0 ]; then
                         echo "  Skipping $current_branch (PR is open)"
+                    elif [ -n "$(git -C "$current_path" status --porcelain 2>/dev/null)" ]; then
+                        echo "  ERROR: $current_path has uncommitted or untracked changes, skipping" >&2
+                        had_errors=1
                     elif [ "$merged_prs" -gt 0 ]; then
                         unpushed=$(git rev-list --count "origin/$main_branch..$current_branch" 2>/dev/null || echo "0")
                         if [ "$unpushed" -gt 0 ]; then
