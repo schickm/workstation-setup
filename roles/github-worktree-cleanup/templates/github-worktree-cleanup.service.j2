@@ -5,4 +5,5 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+ExecCondition=curl -sf --max-time 5 https://api.github.com >/dev/null 2>&1
 ExecStart=%h/.local/bin/github-worktree-cleanup.sh
